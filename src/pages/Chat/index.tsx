@@ -66,7 +66,12 @@ const ChatPage = () => {
 
       {/* 오른쪽 상단 프로필 이미지 위치 - 후에 컴포넌트로 수정! */}
       <div className="absolute top-4 right-4">
-        <div className="flex h-[36px] w-[36px] items-center justify-center overflow-hidden rounded-full bg-gray-200"></div>
+        <div className="flex h-[36px] w-[36px] items-center justify-center overflow-hidden rounded-full bg-gray-200">
+          <img
+            src="https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08"
+            alt="User Avatar"
+          />
+        </div>
       </div>
     </div>
   )
