@@ -9,7 +9,7 @@ const messages = [
     id: 1,
     sender: "other",
     profileImage: "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
-    text: "테스트용 텍스트입니다.\n",
+    text: "안녕\n",
     isTyping: false,
     time: "5:35 PM",
   },
@@ -25,6 +25,46 @@ const messages = [
     id: 3,
     sender: "other",
     profileImage: "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
+    text: "그런 게 궁금하다니! 나는 233이야\n",
+    isTyping: false,
+    time: "5:35 PM",
+  },
+  {
+    id: 4,
+    sender: "self",
+    profileImage: "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
+    text: "그렇구나 지금 뭐해?",
+    isTyping: false,
+    time: "5:35 PM",
+  },
+  {
+    id: 5,
+    sender: "other",
+    profileImage: "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
+    text: "나는 저녁을 차리고 있어\n",
+    isTyping: false,
+    time: "5:35 PM",
+  },
+  {
+    id: 6,
+    sender: "other",
+    profileImage: "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
+    text: "오늘 저녁으론 치즈고기파이를 만들 예정이야!\n 맛있겠지?",
+    isTyping: false,
+    time: "5:35 PM",
+  },
+  {
+    id: 7,
+    sender: "self",
+    profileImage: "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
+    text: "헐 레시피가 궁금해",
+    isTyping: false,
+    time: "5:35 PM",
+  },
+  {
+    id: 8,
+    sender: "other",
+    profileImage: "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
     text: "",
     isTyping: true,
     time: "Typing",
@@ -38,8 +78,8 @@ const ChatPage = () => {
       <div className="h-full w-[255px] bg-gray-200"></div>
 
       {/* 메인 컨텐츠 영역 */}
-      <main className="flex h-screen flex-1 flex-col">
-        <ScrollArea className="flex-1 px-4">
+      <main className="flex flex-1 flex-col">
+        <ScrollArea className="flex-1 overflow-y-auto px-4">
           {/* 채팅창 헤더 - 캐릭터 소개 */}
           <div className="flex justify-center pt-12 pb-6">
             <div className="flex flex-col items-center">
@@ -55,7 +95,6 @@ const ChatPage = () => {
               </p>
             </div>
           </div>
-
           {/* Chat Messages */}
           <ChatMessages messages={messages} />
         </ScrollArea>
