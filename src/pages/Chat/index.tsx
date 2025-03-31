@@ -2,6 +2,34 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import ChatMessages from "./components"
+
+const messages = [
+  {
+    id: 1,
+    sender: "other",
+    profileImage: "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
+    text: "테스트용 텍스트입니다.\n",
+    isTyping: false,
+    time: "5:35 PM",
+  },
+  {
+    id: 2,
+    sender: "self",
+    profileImage: "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
+    text: "그.. 혹시 발 사이즈를 좀 알 수 있을까?",
+    isTyping: false,
+    time: "5:35 PM",
+  },
+  {
+    id: 3,
+    sender: "other",
+    profileImage: "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
+    text: "",
+    isTyping: true,
+    time: "Typing",
+  },
+]
 
 const ChatPage = () => {
   return (
@@ -29,6 +57,7 @@ const ChatPage = () => {
           </div>
 
           {/* Chat Messages */}
+          <ChatMessages messages={messages} />
         </ScrollArea>
 
         {/* 바텀바 */}
