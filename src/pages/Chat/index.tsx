@@ -80,6 +80,16 @@ const ChatPage = () => {
       {/* 메인 컨텐츠 영역 */}
       <main className="flex flex-1 flex-col">
         <ScrollArea className="flex-1 overflow-y-auto px-4">
+          {/* 오른쪽 상단 프로필 이미지 위치 - 후에 컴포넌트로 수정! */}
+          <div className="flex justify-end pt-4 pr-4">
+            <div className="flex h-[36px] w-[36px] items-center justify-center overflow-hidden rounded-full bg-gray-200">
+              <img
+                src="https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08"
+                alt="User Avatar"
+              />
+            </div>
+          </div>
+
           {/* 채팅창 헤더 - 캐릭터 소개 */}
           <div className="flex justify-center pt-12 pb-6">
             <div className="flex flex-col items-center">
@@ -131,16 +141,6 @@ const ChatPage = () => {
           </div>
         </div>
       </main>
-
-      {/* 오른쪽 상단 프로필 이미지 위치 - 후에 컴포넌트로 수정! */}
-      <div className="absolute top-4 right-4">
-        <div className="flex h-[36px] w-[36px] items-center justify-center overflow-hidden rounded-full bg-gray-200">
-          <img
-            src="https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08"
-            alt="User Avatar"
-          />
-        </div>
-      </div>
     </div>
   )
 }
