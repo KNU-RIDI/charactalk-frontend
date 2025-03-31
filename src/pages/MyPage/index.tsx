@@ -1,9 +1,4 @@
 import { useState, useRef } from "react"
-import back from "icon/back.svg"
-import camera from "icon/camera.svg"
-import x from "icon/close.svg"
-import calendar from "icon/calender.svg"
-import down from "icon/down.svg"
 
 const MyPage = () => {
   const [name, setName] = useState("가넷")
@@ -19,7 +14,7 @@ const MyPage = () => {
     <div className="relative h-screen w-screen bg-[#F7F7F7]">
       {/* 뒤로가기 버튼 */}
       <div className="absolute top-4 left-4 flex h-[36px] w-[36px] items-center justify-center">
-        <img src={back} alt="Back" className="h-6 w-6" />
+        <img src="/icons/back.svg" alt="Back" className="h-6 w-6" />
       </div>
 
       {/* 메인 컨텐츠 영역 */}
@@ -29,7 +24,7 @@ const MyPage = () => {
             <h2 className="mb-8 text-2xl font-semibold text-gray-700">프로필 설정</h2>
             <div className="relative mb-8">
               <div className="relative flex h-[110px] w-[110px] items-center justify-center rounded-full bg-gray-200">
-                <img src={camera} alt="Camera" className="h-[50px] w-[50px]" />
+                <img src="/icons/camera.svg" alt="Camera" className="h-[50px] w-[50px]" />
               </div>
               <p className="mt-2 text-center text-xs font-extralight text-[#919191]">사진 삭제</p>
             </div>
@@ -51,7 +46,7 @@ const MyPage = () => {
                       className="absolute top-1/2 right-2 h-5 w-5 -translate-y-1/2 transform p-0"
                       onClick={() => setName("")}
                     >
-                      <img src={x} alt="Close" className="h-full w-full" />
+                      <img src="/icons/close.svg" alt="Close" className="h-full w-full" />
                     </button>
                   )}
                 </div>
@@ -76,7 +71,7 @@ const MyPage = () => {
                     className="absolute top-1/2 right-2 h-5 w-5 -translate-y-1/2 transform p-0"
                     onClick={() => genderSelectRef.current?.focus()}
                   >
-                    <img src={down} alt="Dropdown Icon" className="h-full w-full" />
+                    <img src="/icons/down.svg" alt="Dropdown Icon" className="h-full w-full" />
                   </button>
                 </div>
               </div>
@@ -97,7 +92,7 @@ const MyPage = () => {
                     className="absolute top-1/2 right-2 h-6 w-6 -translate-y-1/2 transform p-0"
                     onClick={() => dateInputRef.current?.showPicker()}
                   >
-                    <img src={calendar} alt="Calendar" className="h-full w-full" />
+                    <img src="/icons/calender.svg" alt="Calendar" className="h-full w-full" />
                   </button>
                   <style>
                     {`

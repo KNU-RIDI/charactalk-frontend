@@ -1,6 +1,3 @@
-import call from "icon/Subtract.svg"
-import send from "icon/Polygon13.svg"
-
 const ChatPage = () => {
   return (
     <div className="relative h-screen w-screen">
@@ -46,7 +43,7 @@ const ChatPage = () => {
           <div className="flex h-[110px] items-center">
             <div className="mx-auto flex w-full max-w-[762px] items-center gap-3">
               <div className="flex h-[45px] w-[45px] items-center justify-center rounded-full border-[1px] border-[#BABABA] bg-[#FFFFFF]">
-                <img src={call} alt="Call" className="h-6 w-6" />
+                <img src="/icons/Subtract.svg" alt="Call" className="h-6 w-6" />
               </div>
 
               <div className="relative flex-1 rounded-[71px] border-[1px] border-[#BABABA]">
@@ -57,7 +54,7 @@ const ChatPage = () => {
                 />
 
                 <div className="absolute top-[5px] right-[5px] flex h-[41px] w-[62px] items-center justify-center rounded-full border-[1px] border-[#BABABA] bg-[#FFFFFF]">
-                  <img src={send} alt="Send" className="h-6 w-6" />
+                  <img src="/icons/Polygon13.svg" alt="Send" className="h-6 w-6" />
                 </div>
               </div>
             </div>
