@@ -1,99 +1,80 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
 
-const messages = [
-  {
-    id: 1,
-    sender: "other",
-    profileImage: "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
-    text: "Å×½ºÆ®¿ë ÅØ½ºÆ®ÀÔ´Ï´Ù.\n",
-    isTyping: false,
-    time: "5:35 PM",
-  },
-  {
-    id: 2,
-    sender: "other",
-    profileImage: "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
-    text: "±×.. È¤½Ã ¹ß »çÀÌÁî¸¦ Á» ¾Ë ¼ö ÀÖÀ»±î?",
-    isTyping: true,
-    time: "Typing",
-  },
-  {
-    id: 3,
-    sender: "self",
-    profileImage: "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
-    text: "",
-    isTyping: false,
-    time: "5:35 PM",
-  },
-]
+interface Message {
+  id: number
+  sender: string
+  profileImage: string
+  text: string
+  isTyping: boolean
+  time: string
+}
 
-const ChatMessages = () => {
+interface ChatMessagesProps {
+  messages: Message[]
+}
+
+const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
   return (
-    <div className="relative h-[496px] w-[369px]">
-      <div className="flex h-full w-full flex-col overflow-hidden rounded-[5px] border border-dashed border-[#9747ff] p-2">
-        {messages.map((message) => {
-          const isSelf = message.sender === "self"
+    <div>
+      {messages.map((message: Message) => {
+        const isSelf = message.sender === "self"
 
-          return (
-            <div
-              key={message.id}
-              className={`flex ${isSelf ? "justify-end" : "justify-start"} mb-8`}
-            >
-              {/* Ä³¸¯ÅÍ ÇÁ»ç */}
-              {!isSelf && (
-                <Avatar className="mr-2 h-[54px] w-[54px] flex-shrink-0">
-                  <AvatarImage src={message.profileImage} alt="Profile" />
-                </Avatar>
-              )}
+        return (
+          <div key={message.id} className={`flex ${isSelf ? "justify-end" : "justify-start"} mb-3`}>
+            {/* ìºë¦­í„° í”„ì‚¬ */}
+            {!isSelf && (
+              <Avatar className="mr-2 h-[50px] w-[50px] flex-shrink-0">
+                <AvatarImage src={message.profileImage} alt="Profile" />
+              </Avatar>
+            )}
 
-              {/* »ç¿ëÀÚ ÇÁ»ç */}
-              {isSelf && (
-                <Avatar className="ml-2 h-[54px] w-[54px] flex-shrink-0">
-                  <AvatarImage src={message.profileImage} alt="Profile" />
-                </Avatar>
-              )}
+            <div className="flex flex-col items-start gap-[3px] py-[40px]">
+              <Card
+                className={`border border-solid border-[#BABABA] shadow-none ${
+                  isSelf
+                    ? "rounded-[50px_0px_50px_50px] bg-white"
+                    : "rounded-[0px_50px_50px_50px] bg-[#F7F7F7]"
+                }`}
+              >
+                {/* íƒ€ì´í•‘ ì¤‘ì¼ ë•Œ! */}
+                <CardContent className="px-[22px] py-5">
+                  {message.isTyping ? (
+                    <div className="flex items-center gap-[17px]">
+                      {["white", "#e6e6e6", "#b5b5b5"].map((color, index) => (
+                        <div
+                          key={index}
+                          className="h-[17px] w-[16.52px] rounded-[8.26px/8.5px]"
+                          style={{ backgroundColor: color }}
+                        />
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-[15px] font-normal whitespace-pre-line text-black">
+                      {message.text}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
 
-              <div className="flex flex-col">
-                <Card
-                  className={`border-gray-4 border border-solid ${
-                    isSelf
-                      ? "rounded-[40px_0px_40px_40px] bg-white"
-                      : "bg-gray-3 rounded-[0px_40px_40px_40px]"
-                  }`}
-                >
-                  {/* Å¸ÀÌÇÎ ÁßÀÏ ¶§! */}
-                  <CardContent className="px-[22px] py-5">
-                    {message.isTyping ? (
-                      <div className="flex items-center gap-[17px]">
-                        {["white", "#e6e6e6", "#b5b5b5"].map((color, index) => (
-                          <div
-                            key={index}
-                            className="h-[17px] w-[16.52px] rounded-[8.26px/8.5px]"
-                            style={{ backgroundColor: color }}
-                          />
-                        ))}
-                      </div>
-                    ) : (
-                      <p className="[font-family:'Inter-Regular',Helvetica] text-[15px] font-normal whitespace-pre-line text-black">
-                        {message.text}
-                      </p>
-                    )}
-                  </CardContent>
-                </Card>
-
-                <span
-                  className={`text-gray-1 mt-1 [font-family:'Inter-ExtraLight',Helvetica] text-[11px] font-extralight ${
-                    isSelf ? "text-right" : ""
-                  }`}
-                >
-                  {message.time}
-                </span>
-              </div>
+              <span
+                className={`text-[11px] font-extralight text-[#616161] ${
+                  isSelf ? "text-right" : ""
+                }`}
+              >
+                {message.time}
+              </span>
             </div>
-          )
-        })}
-      </div>
+
+            {/* ì‚¬ìš©ì í”„ì‚¬ */}
+            {isSelf && (
+              <Avatar className="ml-2 h-[50px] w-[50px] flex-shrink-0">
+                <AvatarImage src={message.profileImage} alt="Profile" />
+              </Avatar>
+            )}
+          </div>
+        )
+      })}
     </div>
   )
 }
