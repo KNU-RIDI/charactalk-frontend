@@ -29,7 +29,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
               </Avatar>
             )}
 
-            <div className="flex flex-col items-start gap-[3px] py-[40px]">
+            <div className="flex flex-col items-start gap-[1px] py-[40px]">
               <Card
                 className={`border border-solid border-[#BABABA] shadow-none ${
                   isSelf
@@ -37,14 +37,14 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
                     : "rounded-[0px_50px_50px_50px] bg-[#F7F7F7]"
                 }`}
               >
-                {/* 타이핑 중일 때! */}
-                <CardContent className="px-[22px] py-5">
+                <CardContent className="px-[22px] py-2">
+                  {/* 타이핑 중일 때! */}
                   {message.isTyping ? (
                     <div className="flex items-center gap-[17px]">
                       {["white", "#e6e6e6", "#b5b5b5"].map((color, index) => (
                         <div
                           key={index}
-                          className="h-[17px] w-[16.52px] rounded-[8.26px/8.5px]"
+                          className="h-[17px] w-[16.52px] rounded-full"
                           style={{ backgroundColor: color }}
                         />
                       ))}
