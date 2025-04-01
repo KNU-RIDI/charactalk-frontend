@@ -106,7 +106,7 @@ const ChatPage = () => {
           </div>
 
           {/* 채팅창 헤더 - 캐릭터 소개 */}
-          <div className="flex justify-center pt-12 pb-6">
+          <div className="flex justify-center pb-6">
             <div className="flex flex-col items-center">
               <Avatar className="h-[130px] w-[130px]">
                 <AvatarImage
