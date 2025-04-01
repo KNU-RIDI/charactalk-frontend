@@ -1,5 +1,9 @@
-const HomePage = () => {
-  return <div>홈</div>
-}
+import Layout from "@/components/Sidebar/layout"
 
-export default HomePage
+export default function Home() {
+  return (
+    <Layout>
+      <div></div>
+    </Layout>
+  )
+}
