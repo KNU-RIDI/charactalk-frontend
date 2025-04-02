@@ -1,4 +1,5 @@
 import { useState, useRef } from "react"
+import { useNavigate } from "react-router-dom"
 
 const MyPage = () => {
   const [name, setName] = useState("가넷")
@@ -9,6 +10,12 @@ const MyPage = () => {
 
   const dateInputRef = useRef<HTMLInputElement>(null)
   const genderSelectRef = useRef<HTMLSelectElement>(null)
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken")
+    navigate("/")
+  }
 
   return (
     <div className="relative h-screen w-screen bg-[#F7F7F7]">
@@ -116,7 +123,12 @@ const MyPage = () => {
             </button>
 
             {/* 로그아웃 */}
-            <p className="mt-3 cursor-pointer text-[12px] text-[#616161] underline">로그아웃</p>
+            <p
+              className="mt-3 cursor-pointer text-[12px] text-[#616161] underline"
+              onClick={handleLogout}
+            >
+              로그아웃
+            </p>
           </div>
         </div>
       </div>
