@@ -1,16 +1,13 @@
 import { useNavigate } from "react-router-dom"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
-import { useEffect, useState } from "react"
 
 const Profile = () => {
   const navigate = useNavigate()
-  const [token, setToken] = useState<string | null>(null)
 
-  useEffect(() => {
-    setToken(localStorage.getItem("accessToken"))
-  }, [])
+  /* 로그인 나중에 수정 */
   const handleClick = () => {
-    if (token) {
+    const accessToken = localStorage.getItem("accessToken")
+    if (accessToken) {
       navigate("/my-page")
     } else {
       window.location.href =
