@@ -23,10 +23,10 @@ export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        <a href="/" className="flex items-center gap-2 p-2">
-          <img src="/icons/home.svg" alt="Home" className="h-6 w-6" />{" "}
-          <span className="text-lg font-semibold"></span>
-        </a>
+        <button className="flex items-center gap-2 p-2">
+          <img src="/icons/home.svg" alt="Home" className="h-5 w-5" />
+          <span className="text-lg font-semibold">Home</span>
+        </button>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
