@@ -57,6 +57,14 @@ const chatList = [
 export function AppSidebar() {
   return (
     <Sidebar className="h-screen w-64 bg-white">
+      <SidebarHeader className="flex flex-row items-center justify-between border-b px-5.5 py-3.5">
+        <button>
+          <img src="/icons/home.svg" alt="/" className="h-6 w-6" />
+        </button>
+        <button>
+          <img src="/icons/add.svg" alt="/" className="h-6 w-6" />
+        </button>
+      </SidebarHeader>
       <SidebarContent className="h-auto">
         <SidebarGroup className="flex h-auto flex-col">
           <SidebarGroupContent className="flex-1">
