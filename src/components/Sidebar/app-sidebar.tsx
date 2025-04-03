@@ -1,4 +1,3 @@
-import { Home, Inbox } from "lucide-react"
 import {
   Sidebar,
   SidebarHeader,
@@ -10,6 +9,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { useNavigate } from "react-router-dom"
 
 const chatList = [
   {
@@ -55,10 +55,11 @@ const chatList = [
 ]
 
 export function AppSidebar() {
+  const navigate = useNavigate()
   return (
     <Sidebar className="h-screen w-64 bg-white">
       <SidebarHeader className="flex flex-row items-center justify-between border-b px-5.5 py-3.5">
-        <button>
+        <button onClick={() => navigate("/")}>
           <img src="/icons/home.svg" alt="/" className="h-6 w-6" />
         </button>
         <button>
@@ -72,7 +73,10 @@ export function AppSidebar() {
               {chatList.map((chat, index) => (
                 <SidebarMenuItem key={chat.id} className="p-1 hover:bg-gray-100">
                   <SidebarMenuButton asChild>
-                    <a href="#" className="flex h-full items-center gap-3">
+                    <button
+                      onClick={() => navigate(`/chat`)}
+                      className="flex h-full items-center gap-3"
+                    >
                       {/* 채팅 번호 */}
                       <span className="text-md text-gray-400">{index + 1}</span>
                       {/* 프로필 이미지 */}
@@ -91,7 +95,7 @@ export function AppSidebar() {
                           </span>
                         )}
                       </div>
-                    </a>
+                    </button>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
