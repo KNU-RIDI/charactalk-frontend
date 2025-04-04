@@ -23,7 +23,7 @@ export const chatStream = (chatRoomId: number, onMessage: OnMessageCallback) => 
     }
 
     eventSource.onerror = (error) => {
-      console.error("SSE ¿À·ù ¹ß»ı ?", error)
+      console.error("SSE ì˜¤ë¥˜ ë°œìƒ ?", error)
       eventSource.close()
     }
 
