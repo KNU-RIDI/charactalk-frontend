@@ -3,8 +3,8 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import ChatMessages from "./components"
-import Profile from "@/components/profile"
+import ChatMessages from "./components/Bubble"
+import Profile from "@/components/Profile"
 import Layout from "@/components/Sidebar/layout"
 
 const messages = [
@@ -95,10 +95,8 @@ const ChatPage = () => {
 
   return (
     <div className="relative flex h-screen overflow-hidden bg-white">
-      {/* 사이드바 컴포넌트 */}
-      <Layout>
-        <div></div>
-      </Layout>
+      {/* 사이드바 컴포넌트 오류로 잠시 사용 중지 */}
+      <div className="h-full w-[255px] bg-gray-200"></div>
 
       {/* 메인 컨텐츠 영역 */}
       <main className="flex flex-1 flex-col">
