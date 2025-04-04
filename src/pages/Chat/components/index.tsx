@@ -44,8 +44,8 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
                       {["white", "#e6e6e6", "#b5b5b5"].map((color, index) => (
                         <div
                           key={index}
-                          className="h-[17px] w-[16.52px] rounded-full"
-                          style={{ backgroundColor: color }}
+                          className="h-[17px] w-[16.52px] animate-bounce rounded-full"
+                          style={{ backgroundColor: color, animationDelay: `${index * 0.3}s` }}
                         />
                       ))}
                     </div>
