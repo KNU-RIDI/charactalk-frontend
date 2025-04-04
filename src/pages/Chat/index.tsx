@@ -7,7 +7,7 @@ import ChatMessages from "./components/Bubble"
 import Profile from "@/components/Profile"
 import Layout from "@/components/Sidebar/layout"
 import { sendMessage } from "@/api/Chat/usePostMessage"
-import { Message } from "@/types"
+import { Message } from "@/types/index"
 
 const ChatPage = () => {
   const [input, setInput] = useState("")
@@ -21,7 +21,7 @@ const ChatPage = () => {
       senderId: 123,
       charId: "cinderella",
       message: input,
-      timestamp: new Date().toISOString(),
+      timestamp: new Date().toLocaleTimeString(),
     }
 
     try {
@@ -30,15 +30,17 @@ const ChatPage = () => {
       setMessages((prev) => [
         ...prev,
         {
-          id: Date.now(),
+          id: messages.length + 1,
           sender: "self",
+          message: input,
           profileImage:
             "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
           text: input,
+          timestamp: chatRequest.timestamp,
           isTyping: false,
-          timestamp: new Date().toLocaleTimeString(),
         },
       ])
+
       setInput("")
     } catch (error) {
       console.error("메시지 전송 실패", error)
@@ -99,18 +101,20 @@ const ChatPage = () => {
             <div className="relative flex-1">
               <Input
                 type="text"
-                style={{
-                  boxShadow: "none",
-                }}
-                className="font-body-body-m h-[51px] w-full rounded-[71px] border border-[#BABABA] bg-[#F7F7F7] px-4 py-2 text-[14px] leading-[20px] text-black"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
                 placeholder="Type a message..."
+                style={{ boxShadow: "none" }}
+                className="font-body-body-m h-[51px] w-full rounded-[71px] border border-[#BABABA] bg-[#F7F7F7] px-4 py-2 text-[14px] leading-[20px] text-black"
               />
               <Button
                 variant="secondary"
                 size="icon"
+                onClick={handleSend}
                 className="absolute top-[5px] right-[5px] flex h-[41px] w-[62px] items-center justify-center rounded-full border-[1px] border-[#BABABA] bg-white"
               >
-                <img src="/icons/Polygon13.svg" alt="Call" className="h-8 w-8" />
+                <img src="/icons/Polygon13.svg" alt="Send" className="h-8 w-8" />
               </Button>
             </div>
           </div>
