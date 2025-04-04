@@ -14,6 +14,5 @@ export const sendMessage = async (chat: ChatRequest) => {
     console.log("메시지 전송 성공: ", res.status)
   } catch (error) {
     console.error("메시지 전송 실패: ", error)
-    throw error
   }
 }
