@@ -6,92 +6,51 @@ import { Input } from "@/components/ui/input"
 import ChatMessages from "./components/Bubble"
 import Profile from "@/components/Profile"
 import Layout from "@/components/Sidebar/layout"
-
-const messages = [
-  {
-    id: 1,
-    sender: "other",
-    profileImage: "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
-    text: "안녕\n",
-    isTyping: false,
-    time: "5:35 PM",
-  },
-  {
-    id: 2,
-    sender: "self",
-    profileImage: "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
-    text: "그.. 혹시 발 사이즈를 좀 알 수 있을까?",
-    isTyping: false,
-    time: "5:36 PM",
-  },
-  {
-    id: 3,
-    sender: "other",
-    profileImage: "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
-    text: "그런 게 궁금하다니! 나는 222야\n",
-    isTyping: false,
-    time: "5:36 PM",
-  },
-  {
-    id: 4,
-    sender: "self",
-    profileImage: "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
-    text: "그렇구나 지금 뭐해?",
-    isTyping: false,
-    time: "5:37 PM",
-  },
-  {
-    id: 5,
-    sender: "other",
-    profileImage: "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
-    text: "나는 저녁을 차리고 있어\n",
-    isTyping: false,
-    time: "5:37 PM",
-  },
-  {
-    id: 6,
-    sender: "other",
-    profileImage: "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
-    text: "오늘 저녁으론 치즈고기파이를 만들 예정이야!\n 맛있겠지?",
-    isTyping: false,
-    time: "5:37 PM",
-  },
-  {
-    id: 7,
-    sender: "self",
-    profileImage: "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
-    text: "헐 레시피가 궁금해",
-    isTyping: false,
-    time: "5:38 PM",
-  },
-  {
-    id: 8,
-    sender: "other",
-    profileImage: "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
-    text: "",
-    isTyping: true,
-    time: "Typing",
-  },
-]
+import { sendMessage } from "@/api/Chat/usePostMessage"
+import { Message } from "@/types"
 
 const ChatPage = () => {
-  /*
-  const [messages, setMessages] = useState([])
+  const [input, setInput] = useState("")
+  const [messages, setMessages] = useState<Message[]>([])
 
-  useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const response = await fetch("/api/messages")
-        const data = await response.json()
-        setMessages(data) // 상태 업데이트
-      } catch (error) {
-        console.error("Failed to fetch messages:", error)
-      }
+  const handleSend = async () => {
+    if (!input.trim()) return
+
+    const chatRequest = {
+      chatRoomId: 1,
+      senderId: 123,
+      charId: "cinderella",
+      message: input,
+      timestamp: new Date().toISOString(),
     }
 
-    fetchMessages()
-  }, [])
-  */
+    try {
+      await sendMessage(chatRequest)
+
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: Date.now(),
+          sender: "self",
+          profileImage:
+            "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
+          text: input,
+          isTyping: false,
+          timestamp: new Date().toLocaleTimeString(),
+        },
+      ])
+      setInput("")
+    } catch (error) {
+      console.error("메시지 전송 실패", error)
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault()
+      handleSend()
+    }
+  }
 
   return (
     <div className="relative flex h-screen overflow-hidden bg-white">
