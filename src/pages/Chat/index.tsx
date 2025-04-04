@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import ChatMessages from "./components"
 import Profile from "@/components/profile"
+import Layout from "@/components/Sidebar/layout"
 
 const messages = [
   {
@@ -94,15 +95,17 @@ const ChatPage = () => {
 
   return (
     <div className="relative flex h-screen overflow-hidden bg-white">
-      {/* 임시로 사이드바 위치 지정 - 후에 컴포넌트로 수정! */}
-      <div className="h-full w-[255px] bg-gray-200"></div>
+      {/* 사이드바 컴포넌트 */}
+      <Layout>
+        <div></div>
+      </Layout>
 
       {/* 메인 컨텐츠 영역 */}
       <main className="flex flex-1 flex-col">
         <ScrollArea className="flex-1 overflow-y-auto px-4">
-          {/* 오른쪽 상단 프로필 이미지 위치 - 후에 컴포넌트로 수정! */}
-          <div className="flex justify-end pt-4 pr-4">
-            <Profile></Profile>
+          {/* 오른쪽 상단 프로필 컴포넌트 */}
+          <div className="absolute top-4 right-4 z-50">
+            <Profile />
           </div>
 
           {/* 채팅창 헤더 - 캐릭터 소개 */}
