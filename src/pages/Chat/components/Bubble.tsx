@@ -1,14 +1,6 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
-
-interface Message {
-  id: number
-  sender: string
-  profileImage: string
-  text: string
-  isTyping: boolean
-  time: string
-}
+import { Message } from "@/types/index"
 
 interface ChatMessagesProps {
   messages: Message[]
@@ -62,7 +54,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
                   isSelf ? "text-right" : ""
                 }`}
               >
-                {message.time}
+                {message.timestamp}
               </span>
             </div>
 
