@@ -1,6 +1,8 @@
 import axios from "axios"
 
-export const fetchInstance = () => {
+export const api = () => {
+  axios.defaults.withCredentials = true
+
   return axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
     headers: {
@@ -9,8 +11,9 @@ export const fetchInstance = () => {
   })
 }
 
-export const fetchInstanceWithToken = () => {
+export const apiWithToken = () => {
   const token = localStorage.getItem("accessToken")
+  axios.defaults.withCredentials = true
 
   return axios.create({
     baseURL: process.env.REACT_APP_BASE_URL,
