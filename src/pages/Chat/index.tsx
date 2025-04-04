@@ -8,10 +8,16 @@ import Profile from "@/components/Profile"
 import Layout from "@/components/Sidebar/layout"
 import { sendMessage } from "@/api/Chat/usePostMessage"
 import { Message } from "@/types/index"
+import { chatStream } from "@/api/Chat/useGetMessage"
 
 const ChatPage = () => {
   const [input, setInput] = useState("")
   const [messages, setMessages] = useState<Message[]>([])
+  const chatRoomId = 1
+
+  chatStream(chatRoomId, (incomingMessage) => {
+    setMessages((prev) => [...prev, incomingMessage])
+  })
 
   const handleSend = async () => {
     if (!input.trim()) return
