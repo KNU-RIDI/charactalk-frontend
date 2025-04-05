@@ -11,8 +11,9 @@ export interface ChatRequest {
 export const sendMessage = async (chat: ChatRequest) => {
   try {
     const res = await apiWithToken().post("/chat/send", chat)
-    console.log("¸Ş½ÃÁö Àü¼Û ¼º°ø: ", res.status)
-  } catch (error) {
-    console.error("¸Ş½ÃÁö Àü¼Û ½ÇÆĞ: ", error)
+    console.log("ë©”ì‹œì§€ ì „ì†¡ ì„±ê³µ: ", res.status)
+  } catch (error: any) {
+    console.error("ë©”ì‹œì§€ ì „ì†¡ ì‹¤íŒ¨: ", error)
+    // console.log("ì„œë²„ ì‘ë‹µ:", error.response?.data)
   }
 }

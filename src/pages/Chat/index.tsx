@@ -8,26 +8,28 @@ import Profile from "@/components/Profile"
 import Layout from "@/components/Sidebar/layout"
 import { sendMessage } from "@/api/Chat/usePostMessage"
 import { Message } from "@/types/index"
-import { chatStream } from "@/api/Chat/useGetMessage"
+import { useChatStream } from "@/api/Chat/useGetMessage"
 
 const ChatPage = () => {
   const [input, setInput] = useState("")
   const [messages, setMessages] = useState<Message[]>([])
-  const chatRoomId = 1
 
-  chatStream(chatRoomId, (incomingMessage) => {
+  useChatStream((incomingMessage) => {
     setMessages((prev) => [...prev, incomingMessage])
   })
 
   const handleSend = async () => {
     if (!input.trim()) return
 
+    const now = new Date()
+    const timestamp = now.toISOString().slice(0, 19)
+
     const chatRequest = {
       chatRoomId: 1,
-      senderId: 123,
+      senderId: 5,
       charId: "cinderella",
       message: input,
-      timestamp: new Date().toLocaleTimeString(),
+      timestamp: new Date().toISOString().split(".")[0],
     }
 
     try {
@@ -42,7 +44,7 @@ const ChatPage = () => {
           profileImage:
             "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
           text: input,
-          timestamp: chatRequest.timestamp,
+          timestamp,
           isTyping: false,
         },
       ])

@@ -4,7 +4,7 @@ export const api = () => {
   axios.defaults.withCredentials = true
 
   return axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL,
+    baseURL: import.meta.env.VITE_API_URL,
     headers: {
       "Content-Type": "application/json",
     },
@@ -16,7 +16,7 @@ export const apiWithToken = () => {
   axios.defaults.withCredentials = true
 
   return axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL,
+    baseURL: import.meta.env.VITE_API_URL,
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
