@@ -1,5 +1,5 @@
 import Layout from "@/components/Sidebar/layout"
-import Profile from "@/components/Profile"
+import Profile from "@/components/profile"
 
 export default function Home() {
   return (
