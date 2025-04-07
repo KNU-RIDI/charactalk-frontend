@@ -4,8 +4,9 @@ import Profile from "@/components/Profile"
 export default function Home() {
   return (
     <div className="relative h-full w-full">
-      <div className="absolute top-4 right-4 z-50">
-        <Profile />
+      {/* 프로필 컴포넌트 */}
+      <div className="flex justify-end pt-4 pr-4">
+        <Profile></Profile>
       </div>
 
       <Layout>
