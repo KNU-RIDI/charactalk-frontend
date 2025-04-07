@@ -1,5 +1,6 @@
 import { useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
+import Profile from "@/components/Profile"
 
 const MyPage = () => {
   const [name, setName] = useState("가넷")
@@ -133,9 +134,9 @@ const MyPage = () => {
         </div>
       </div>
 
-      {/* 오른쪽 상단 프로필 이미지 위치 - 후에 컴포넌트로 수정! */}
-      <div className="absolute top-4 right-4">
-        <div className="flex h-[36px] w-[36px] items-center justify-center overflow-hidden rounded-full bg-gray-200"></div>
+      {/* 오른쪽 상단 프로필*/}
+      <div className="flex justify-end pt-4 pr-4">
+        <Profile></Profile>
       </div>
     </div>
   )
