@@ -8,7 +8,7 @@ import Profile from "@/components/Profile"
 import Layout from "@/components/Sidebar/layout"
 import { sendMessage } from "@/api/Chat/usePostMessage"
 import { Message } from "@/types/index"
-import { useChatStream } from "@/api/Chat/useGetMessage"
+import { useChatStream } from "@/api/Chat/useChatStream"
 
 const ChatPage = () => {
   const [input, setInput] = useState("")
@@ -65,8 +65,6 @@ const ChatPage = () => {
   return (
     <Layout>
       <div className="relative flex h-screen overflow-hidden bg-white">
-        {/* 사이드바 컴포넌트 오류로 잠시 사용 중지 */}
-
         {/* 메인 컨텐츠 영역 */}
         <main className="flex flex-1 flex-col">
           <ScrollArea className="flex-1 overflow-y-auto px-4">
