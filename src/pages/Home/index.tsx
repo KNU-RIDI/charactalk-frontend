@@ -20,8 +20,24 @@ export default function Home() {
         <Profile></Profile>
       </div>
       <Layout>
-        <div className="w-full px-5">
+        <div className="w-full px-6">
           <h1 className="mb-6 text-xl font-bold text-blue-600">CharacTalk</h1>
+          {/* 오늘의 베스트 */}
+          <div className="mb-10">
+            <h2 className="text-m mb-4 font-semibold">오늘의 베스트</h2>
+            <div className="grid grid-cols-3 gap-x-4 gap-y-6">
+              {bestCharacters.map((char, index) => (
+                <div key={char.id} className="flex items-center space-x-4">
+                  <span className="w-4 text-lg font-semibold">{index + 1}</span>
+                  <div className="h-10 w-10 rounded-full bg-gray-200" />
+                  <div className="text-sm">
+                    <div className="font-medium">{char.name}</div>
+                    <div className="text-gray-500">{char.englishName}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </Layout>
     </div>
