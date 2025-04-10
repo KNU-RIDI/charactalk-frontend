@@ -14,6 +14,8 @@ const koreanBooks = [
   { id: 9, title: "호랑이와 곶감" },
   { id: 10, title: "흥부와 놀부" },
   { id: 11, title: "토끼와 거북이" },
+  { id: 12, title: "흥부와 놀부" },
+  { id: 13, title: "토끼와 거북이" },
 ]
 
 export default function BookSection() {
