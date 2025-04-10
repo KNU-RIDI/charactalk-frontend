@@ -7,7 +7,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       {/* 사이드바 */}
       <SidebarProvider>
         <AppSidebar />
-        <div className="relative flex flex-1 flex-col overflow-hidden">
+        <div className="relative flex flex-1 flex-col overflow-y-auto">
           <SidebarTrigger />
           {children}
         </div>
