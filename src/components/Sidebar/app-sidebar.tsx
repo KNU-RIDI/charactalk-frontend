@@ -79,7 +79,10 @@ function ChatItem({ chat, index, onClick }: { chat: Chat; index: number; onClick
           <div className="flex flex-col items-end">
             <div className="text-[10px] text-gray-400">{chat.time}</div>
             {chat.unreadCount > 0 && (
-              <span className="mt-1.5 rounded-full bg-blue-500 px-1.5 py-0.5 text-xs font-semibold text-white">
+              <span
+                style={{ backgroundColor: "#1E9EFF" }}
+                className="mt-1.5 rounded-full px-1.5 py-0.5 text-xs font-semibold text-white"
+              >
                 {chat.unreadCount}
               </span>
             )}
