@@ -97,7 +97,7 @@ const ChatPage = () => {
               <Button
                 variant="outline"
                 size="icon"
-                className="flex h-[45px] w-[45px] items-center justify-center rounded-full border border-[#BABABA] bg-white"
+                className="flex h-[45px] w-[45px] items-center justify-center rounded-full border border-[var(--gray4)] bg-white"
               >
                 <img src="/icons/Subtract.svg" alt="Call" className="h-8 w-8" />
               </Button>
@@ -111,13 +111,13 @@ const ChatPage = () => {
                   onKeyDown={handleKeyDown}
                   placeholder="Type a message..."
                   style={{ boxShadow: "none" }}
-                  className="font-body-body-m h-[51px] w-full rounded-[71px] border border-[#BABABA] bg-[#F7F7F7] px-4 py-2 text-[14px] leading-[20px] text-black"
+                  className="font-body-body-m h-[51px] w-full rounded-[71px] border border-[var(--gray4)] bg-[var(--gray3)] px-4 py-2 text-[14px] leading-[20px] text-black"
                 />
                 <Button
                   variant="secondary"
                   size="icon"
                   onClick={handleSend}
-                  className="absolute top-[5px] right-[5px] flex h-[41px] w-[62px] items-center justify-center rounded-full border-[1px] border-[#BABABA] bg-white"
+                  className="absolute top-[5px] right-[5px] flex h-[41px] w-[62px] items-center justify-center rounded-full border-[1px] border-[var(--gray4)] bg-white"
                 >
                   <img src="/icons/Polygon13.svg" alt="Send" className="h-8 w-8" />
                 </Button>
