@@ -1,5 +1,5 @@
 import Layout from "@/components/Sidebar/layout"
-import Profile from "@/components/profile"
+import Profile from "@/components/Profile"
 import BestCharacters from "./components/bestChar"
 import BookSection from "./components/Book"
 
