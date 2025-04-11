@@ -19,7 +19,7 @@ const MyPage = () => {
   }
 
   return (
-    <div className="relative h-screen w-screen bg-[#F7F7F7]">
+    <div className="relative h-screen w-screen bg-[var(--gray3)]">
       {/* 뒤로가기 버튼 */}
       <div className="absolute top-4 left-4 flex h-[36px] w-[36px] items-center justify-center">
         <img src="/icons/back.svg" alt="Back" className="h-6 w-6" />
@@ -34,13 +34,13 @@ const MyPage = () => {
               <div className="relative flex h-[110px] w-[110px] items-center justify-center rounded-full bg-gray-200">
                 <img src="/icons/camera.svg" alt="Camera" className="h-[50px] w-[50px]" />
               </div>
-              <p className="mt-2 text-center text-xs font-extralight text-[#919191]">사진 삭제</p>
+              <p className="mt-2 text-center text-xs font-extralight text-[#929292]">사진 삭제</p>
             </div>
 
             <div className="flex w-full max-w-[270px] flex-col gap-6">
               {/* 이름 입력 */}
               <div className="space-y-2">
-                <label className="ml-1.5 text-base font-extralight text-[#2a2a2a]">이름</label>
+                <label className="ml-1.5 text-base font-extralight text-black">이름</label>
                 <div className="relative">
                   <input
                     type="text"
@@ -62,7 +62,7 @@ const MyPage = () => {
 
               {/* 성별 선택 */}
               <div className="space-y-2">
-                <label className="ml-1.5 text-base font-extralight text-[#2a2a2a]">성별</label>
+                <label className="ml-1.5 text-base font-extralight text-black">성별</label>
                 <div className="relative">
                   <select
                     defaultValue={profileData.gender}
@@ -86,7 +86,7 @@ const MyPage = () => {
 
               {/* 생년월일 입력 */}
               <div className="space-y-2">
-                <label className="ml-1.5 text-base font-extralight text-[#2a2a2a]">생년월일</label>
+                <label className="ml-1.5 text-base font-extralight text-black">생년월일</label>
                 <div className="relative">
                   <input
                     type="date"
@@ -118,14 +118,14 @@ const MyPage = () => {
 
             <button
               type="button"
-              className="mt-10 h-[36px] w-[132px] rounded-[10px] bg-[#1E9EFF] font-bold text-white"
+              className="mt-10 h-[36px] w-[132px] rounded-[10px] bg-[var(--blue)] font-bold text-white"
             >
               저장
             </button>
 
             {/* 로그아웃 */}
             <p
-              className="mt-3 cursor-pointer text-[12px] text-[#616161] underline"
+              className="mt-3 cursor-pointer text-[12px] text-[var(--gray1)] underline"
               onClick={handleLogout}
             >
               로그아웃
