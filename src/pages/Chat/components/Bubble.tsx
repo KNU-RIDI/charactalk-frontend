@@ -23,10 +23,10 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
 
             <div className="flex flex-col items-start gap-[1px] py-[40px]">
               <Card
-                className={`border border-solid border-[#BABABA] shadow-none ${
+                className={`border border-solid border-[var(--gray4)] shadow-none ${
                   isSelf
                     ? "rounded-[50px_0px_50px_50px] bg-white"
-                    : "rounded-[0px_50px_50px_50px] bg-[#F7F7F7]"
+                    : "rounded-[0px_50px_50px_50px] bg-[var(--gray3)]"
                 }`}
               >
                 <CardContent className="px-[22px] py-2">
@@ -50,7 +50,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
               </Card>
 
               <span
-                className={`text-[11px] font-extralight text-[#616161] ${
+                className={`text-[11px] font-extralight text-[var(--gray1)] ${
                   isSelf ? "text-right" : ""
                 }`}
               >
