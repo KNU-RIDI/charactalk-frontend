@@ -5,6 +5,7 @@ export const RouterPath = {
   signUp: "/sign-up",
   login: "/login",
   myPage: "/my-page",
+  live2d: "/live2d",
   notFound: "*",
 }
 
