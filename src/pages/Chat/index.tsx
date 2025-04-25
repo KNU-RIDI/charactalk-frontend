@@ -9,6 +9,7 @@ import Layout from "@/components/Sidebar/layout"
 import { sendMessage } from "@/api/Chat/usePostMessage"
 import { Message } from "@/types/index"
 import { useChatStream } from "@/api/Chat/useChatStream"
+import Live2DView from "../Live2D"
 
 const ChatPage = () => {
   const [input, setInput] = useState("")

@@ -6,6 +6,7 @@ import SignUpPage from "../pages/SignUp"
 import MyPage from "../pages/MyPage"
 import { RouterPath } from "./path"
 import ProtectedRoute from "./ProtectedRoute"
+import Live2DView from "@/pages/Live2D"
 
 const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
         element: <MyPage />,
       },
     ],
+  },
+  {
+    path: RouterPath.live2d,
+    element: <Live2DView />,
   },
   {
     path: RouterPath.notFound,

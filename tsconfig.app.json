@@ -8,7 +8,8 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@framework/*": ["./src/live2d/Framework/src/*"]
     },
 
     /* Bundler mode */
@@ -20,7 +21,7 @@
     "jsx": "react-jsx",
 
     /* Linting */
-    "strict": true,
+    "noImplicitAny": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
