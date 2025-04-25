@@ -1043,6 +1043,11 @@
   dependencies:
     "@tanstack/query-core" "5.71.0"
 
+"@types/audioworklet@^0.0.75":
+  version "0.0.75"
+  resolved "https://registry.yarnpkg.com/@types/audioworklet/-/audioworklet-0.0.75.tgz#1c49b6a68c8cd9437568e4c5b0d648a73b60a138"
+  integrity sha512-Xb35K9bXy+fUl/moqCgoTuvuLWxd2Tro1ua+2j3JzOBzYb5n5bvBry7OKNrw1imObjKufxV5+ZfZ02xFkqJiXw==
+
 "@types/babel__core@^7.20.5":
   version "7.20.5"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.20.5.tgz#3df15f27ba85319caa07ba08d0721889bb39c017"
