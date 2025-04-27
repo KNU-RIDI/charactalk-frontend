@@ -1,7 +1,8 @@
 import Layout from "@/components/Sidebar/layout"
-import Profile from "@/components/profile"
+import Profile from "@/components/Profile"
 import BestCharacters from "./components/bestChar"
 import BookSection from "./components/Book"
+import Search from "@/components/Search"
 
 export default function Home() {
   return (
@@ -9,11 +10,15 @@ export default function Home() {
       <div className="absolute top-4 right-4 z-10">
         <Profile></Profile>
       </div>
+      <div className="absolute top-4 right-15 z-5">
+        <Search></Search>
+      </div>
       <Layout>
         <div className="w-full px-6">
           <h1 className="mb-6 text-xl font-bold" style={{ color: "#1E9EFF" }}>
             CharacTalk
           </h1>
+
           <BestCharacters></BestCharacters>
           <BookSection></BookSection>
         </div>
