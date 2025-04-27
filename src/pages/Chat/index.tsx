@@ -70,7 +70,7 @@ const ChatPage = () => {
         <main className="flex flex-1 flex-col">
           <ScrollArea className="flex-1 overflow-y-auto px-4">
             {/* 오른쪽 상단 프로필 컴포넌트 */}
-            <div className="flex justify-end pt-4 pr-4">
+            <div className="top-4 right-4 z-10 flex justify-end">
               <Profile></Profile>
             </div>
             {/* 채팅창 헤더 - 캐릭터 소개 */}
