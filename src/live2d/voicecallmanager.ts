@@ -1,3 +1,5 @@
+import { LAppModel } from "./lappmodel";
+
 export class VoiceCallManager {
   private FFT_SIZE = 128;
   private SAMPLE_RATE = 24000;
@@ -20,10 +22,13 @@ export class VoiceCallManager {
   private recordBtn: HTMLButtonElement | null = null;
   private endCallBtn: HTMLButtonElement | null = null;
 
-  constructor() {
+  private model: LAppModel | null = null;
+
+  constructor(model: LAppModel) {
     this.startCallBtn = document.getElementById("startCallBtn") as HTMLButtonElement;
     this.recordBtn = document.getElementById("recordBtn") as HTMLButtonElement;
     this.endCallBtn = document.getElementById("endCallBtn") as HTMLButtonElement;
+    this.model = model;
     this.bindEvents();
   }
 
@@ -115,6 +120,7 @@ export class VoiceCallManager {
     }
     
     this.isPlaying = false;
+    this.model.setExpression('NEUTRAL');
   }
 
   public startCall() {
@@ -129,9 +135,15 @@ export class VoiceCallManager {
     };
 
     this.socket.onmessage = (event) => {
-      const audioBuffer = this.decodeLinear16ToAudioBuffer(event.data);
-      this.audioQueue.push(audioBuffer);
-      if (!this.isPlaying) this.playQueue();
+      const data = event.data;
+      if (data instanceof ArrayBuffer) {
+        const audioBuffer = this.decodeLinear16ToAudioBuffer(event.data);
+        this.audioQueue.push(audioBuffer);
+        if (!this.isPlaying) this.playQueue();
+      } else {
+        const parsed = JSON.parse(data.toString());
+        this.model.setExpression(parsed.emotion);
+      }
     };
 
     this.socket.onerror = (e) => {
