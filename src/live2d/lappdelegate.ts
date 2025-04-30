@@ -154,6 +154,8 @@ export class LAppDelegate {
     this.pointEndedEventListener = null;
     document.removeEventListener('pointerdown', this.pointCancelEventListener);
     this.pointCancelEventListener = null;
+    window.removeEventListener('resize', this.windowResizeEventListener);
+    this.windowResizeEventListener = null;
   }
 
   /**
@@ -175,11 +177,11 @@ export class LAppDelegate {
   /**
    * APP에 필요한 것을 초기화한다.
    */
-  public initialize(): boolean {
+  public initialize(canvasId: string): boolean {
     // Cubism SDK 초기화
     this.initializeCubism();
 
-    this.initializeSubdelegates();
+    this.initializeSubdelegates(canvasId);
     this.initializeEventListener();
 
     return true;
@@ -193,6 +195,7 @@ export class LAppDelegate {
     this.pointMovedEventListener = this.onPointerMoved.bind(this);
     this.pointEndedEventListener = this.onPointerEnded.bind(this);
     this.pointCancelEventListener = this.onPointerCancel.bind(this);
+    this.windowResizeEventListener = () => this.onResize();
 
     // 포인터 관련 콜백 함수 등록
     document.addEventListener('pointerdown', this.pointBeganEventListener, {
@@ -207,6 +210,7 @@ export class LAppDelegate {
     document.addEventListener('pointercancel', this.pointCancelEventListener, {
       passive: true
     });
+    window.addEventListener('resize', this.windowResizeEventListener);
   }
 
   /**
@@ -227,11 +231,11 @@ export class LAppDelegate {
   /**
    * Canvas를 생성 및 배치하고 Subdelegate를 초기화한다.
    */
-  private initializeSubdelegates(): void {
+  private initializeSubdelegates(canvasId: string): void {
     this._canvases.prepareCapacity(LAppDefine.CanvasNum);
     this._subdelegates.prepareCapacity(LAppDefine.CanvasNum);
     for (let i = 0; i < LAppDefine.CanvasNum; i++) {
-      const canvas: HTMLCanvasElement = document.getElementById('live2d-canvas') as HTMLCanvasElement;
+      const canvas: HTMLCanvasElement = document.getElementById(canvasId) as HTMLCanvasElement;
       this._canvases.pushBack(canvas);
     }
 
@@ -293,4 +297,6 @@ export class LAppDelegate {
    * 등록된 이벤트 리스너 함수 객체
    */
   private pointCancelEventListener: (this: Document, ev: PointerEvent) => void;
+
+  private windowResizeEventListener: () => void;
 }

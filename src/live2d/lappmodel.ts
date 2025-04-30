@@ -72,12 +72,12 @@ enum LoadStep {
 }
 
 /**
- * ユーザーが実際に使用するモデルの実装クラス<br>
- * モデル生成、機能コンポーネント生成、更新処理とレンダリングの呼び出しを行う。
+ * 사용자가 실제로 사용하는 모델의 구현 클래스<br>
+ * 모델 생성, 기능 컴포넌트 생성, 업데이트 처리 및 렌더링 호출을 수행합니다.
  */
 export class LAppModel extends CubismUserModel {
   /**
-   * model3.jsonが置かれたディレクトリとファイルパスからモデルを生成する
+   * model3.json이 위치한 디렉토리와 파일 경로에서 모델을 생성합니다
    * @param dir
    * @param fileName
    */
@@ -92,23 +92,23 @@ export class LAppModel extends CubismUserModel {
           arrayBuffer.byteLength
         );
 
-        // ステートを更新
+        // 상태를 업데이트
         this._state = LoadStep.LoadModel;
 
         // 結果を保存
         this.setupModel(setting);
       })
       .catch(error => {
-        // model3.json読み込みでエラーが発生した時点で描画は不可能なので、setupせずエラーをcatchして何もしない
+        // model3.json을 읽는 도중 에러가 발생하면 렌더링이 불가능하므로, setup을 하지 않고 에러를 catch해서 아무것도 하지 않는다
         CubismLogError(`Failed to load file ${this._modelHomeDir}${fileName}`);
       });
   }
 
   /**
-   * model3.jsonからモデルを生成する。
-   * model3.jsonの記述に従ってモデル生成、モーション、物理演算などのコンポーネント生成を行う。
+   * model3.json에서 모델을 생성합니다.
+   * model3.json의 기술에 따라 모델 생성, 모션, 물리 연산 등의 컴포넌트 생성을 수행합니다.
    *
-   * @param setting ICubismModelSettingのインスタンス
+   * @param setting ICubismModelSetting의 인스턴스
    */
   private setupModel(setting: ICubismModelSetting): void {
     this._updating = true;
@@ -162,7 +162,7 @@ export class LAppModel extends CubismUserModel {
                 CubismLogError(
                   `Failed to load file ${this._modelHomeDir}${expressionFileName}`
                 );
-                // ファイルが存在しなくてもresponseはnullを返却しないため、空のArrayBufferで対応する
+                // 파일이 존재하지 않아도 response는 null을 반환하지 않으므로, 빈 ArrayBuffer로 대응한다
                 return new ArrayBuffer(0);
               }
             })
@@ -505,13 +505,13 @@ export class LAppModel extends CubismUserModel {
     this._dragX = this._dragManager.getX();
     this._dragY = this._dragManager.getY();
 
-    // モーションによるパラメータ更新の有無
+    // 모션에 의한 파라미터 갱신 여부
     let motionUpdated = false;
 
     //--------------------------------------------------------------------------
-    this._model.loadParameters(); // 前回セーブされた状態をロード
+    this._model.loadParameters(); // 이전에 저장된 상태를 로드
     if (this._motionManager.isFinished()) {
-      // モーションの再生がない場合、待機モーションの中からランダムで再生する
+      // 모션 재생이 없을 때, 대기 모션 중에서 랜덤으로 재생
       this.startRandomMotion(
         LAppDefine.MotionGroupIdle,
         LAppDefine.PriorityIdle
@@ -520,53 +520,53 @@ export class LAppModel extends CubismUserModel {
       motionUpdated = this._motionManager.updateMotion(
         this._model,
         deltaTimeSeconds
-      ); // モーションを更新
+      ); // 모션을 갱신
     }
-    this._model.saveParameters(); // 状態を保存
+    this._model.saveParameters(); // 상태를 저장
     //--------------------------------------------------------------------------
 
-    // まばたき
+    // 눈 깜빡임
     if (!motionUpdated) {
       if (this._eyeBlink != null) {
-        // メインモーションの更新がないとき
-        this._eyeBlink.updateParameters(this._model, deltaTimeSeconds); // 目パチ
+      // 메인 모션의 갱신이 없을 때
+      this._eyeBlink.updateParameters(this._model, deltaTimeSeconds); // 눈 깜빡임
       }
     }
 
     if (this._expressionManager != null) {
-      this._expressionManager.updateMotion(this._model, deltaTimeSeconds); // 表情でパラメータ更新（相対変化）
+      this._expressionManager.updateMotion(this._model, deltaTimeSeconds); // 표정으로 파라미터 갱신(상대 변화)
     }
 
-    // ドラッグによる変化
-    // ドラッグによる顔の向きの調整
-    this._model.addParameterValueById(this._idParamAngleX, this._dragX * 30); // -30から30の値を加える
+    // 드래그에 의한 변화
+    // 드래그에 의한 얼굴 방향 조정
+    this._model.addParameterValueById(this._idParamAngleX, this._dragX * 30); // -30에서 30의 값을 더함
     this._model.addParameterValueById(this._idParamAngleY, this._dragY * 30);
     this._model.addParameterValueById(
       this._idParamAngleZ,
       this._dragX * this._dragY * -30
     );
 
-    // ドラッグによる体の向きの調整
+    // 드래그에 의한 몸 방향 조정
     this._model.addParameterValueById(
       this._idParamBodyAngleX,
       this._dragX * 10
-    ); // -10から10の値を加える
+    ); // -10에서 10의 값을 더함
 
-    // ドラッグによる目の向きの調整
-    this._model.addParameterValueById(this._idParamEyeBallX, this._dragX); // -1から1の値を加える
+    // 드래그에 의한 눈동자 방향 조정
+    this._model.addParameterValueById(this._idParamEyeBallX, this._dragX); // -1에서 1의 값을 더함
     this._model.addParameterValueById(this._idParamEyeBallY, this._dragY);
 
-    // 呼吸など
+    // 호흡 등
     if (this._breath != null) {
       this._breath.updateParameters(this._model, deltaTimeSeconds);
     }
 
-    // 物理演算の設定
+    // 물리 연산 설정
     if (this._physics != null) {
       this._physics.evaluate(this._model, deltaTimeSeconds);
     }
 
-    // リップシンクの設定
+    // 립싱크 설정
     if (this._lipsync) {
       // 실시간으로 립싱크를 수행하는 경우, 시스템에서 음량을 가져와 0~1 범위의 값을 입력합니다.
       let value = this._voiceCallManager.getNormalizedAverageFrequency();
@@ -580,7 +580,7 @@ export class LAppModel extends CubismUserModel {
       }
     }
 
-    // ポーズの設定
+    // 포즈 설정
     if (this._pose != null) {
       this._pose.updateParameters(this._model, deltaTimeSeconds);
     }
@@ -695,12 +695,41 @@ export class LAppModel extends CubismUserModel {
     );
   }
 
+  private getExpressionId(expression: string): string {
+    switch (expression) {
+      case 'HAPPY':
+        return 'exp_02';
+      case 'EXCITED':
+        return 'exp_04';
+      case 'SAD':
+        return 'exp_05';
+      case 'SHY':
+        return 'exp_06';
+      case 'SURPRISED':
+        return 'exp_07';
+      case 'ANNOYED':
+        return 'exp_08';
+      default:
+        return 'exp_01';
+    }
+  }
+
   /**
-   * 引数で指定した表情モーションをセットする
+   * 인수로 지정한 표정 모션을 설정한다
    *
-   * @param expressionId 表情モーションのID
+   * exp_01: 기본(neutral)
+   * exp_02: 웃음(happy)
+   * exp_03: 눈감기
+   * exp_04: 신남(excited)
+   * exp_05: 슬픔(sad)
+   * exp_06: 부끄러움(shy)
+   * exp_07: 놀람(surprised)
+   * exp_08: 삐짐(annoyed)
+   * @param expressionId 표정 모션의 ID 
    */
-  public setExpression(expressionId: string): void {
+  public setExpression(expression: string): void {
+    const expressionId = this.getExpressionId(expression);
+    console.log(`표정: ${expressionId}`);
     const motion: ACubismMotion = this._expressions.getValue(expressionId);
 
     if (this._debugMode) {
@@ -968,7 +997,7 @@ export class LAppModel extends CubismUserModel {
     this._allMotionCount = 0;
     this._consistency = false;
 
-    this._voiceCallManager = new VoiceCallManager();
+    this._voiceCallManager = new VoiceCallManager(this);
   }
 
   private _subdelegate: LAppSubdelegate;
