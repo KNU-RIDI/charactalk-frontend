@@ -2,9 +2,9 @@ import { LAppDelegate } from "@/live2d/lappdelegate"
 import { useEffect } from "react"
 import { Button } from "@/components/ui/button"
 
-function Live2DView() {
+function Live2DView({ onEndCall }: { onEndCall: () => void }) {
   const canvasId = "live2d-canvas"
-
+  
   useEffect(() => {
     if (LAppDelegate.getInstance().initialize(canvasId)) {
       console.log("Live2DView initialized.")
@@ -41,8 +41,6 @@ function Live2DView() {
       </section>
 
       <footer className="z-10 mt-10 flex items-center gap-12">
-        {/* 통화 시작 버튼 */}
-        <button id="startCallBtn" className="absolute m-0 h-0 w-0 overflow-hidden border-0 p-0" />
         {/* 녹음 버튼 */}
         <div className="flex flex-col items-center">
           <Button
@@ -60,6 +58,7 @@ function Live2DView() {
           <Button
             id="endCallBtn"
             variant="outline"
+            onClick={onEndCall}
             className="flex h-[63px] w-[63px] items-center justify-center rounded-full border-[var(--gray4)]"
             aria-label="통화 종료"
           >
