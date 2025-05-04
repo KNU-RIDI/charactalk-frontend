@@ -14,6 +14,7 @@ import Live2DView from "../Live2D"
 const ChatPage = () => {
   const [input, setInput] = useState("")
   const [messages, setMessages] = useState<Message[]>([])
+  const [isCalling, setIsCalling] = useState(false)
 
   useChatStream((incomingMessage) => {
     setMessages((prev) => [...prev, incomingMessage])
@@ -63,7 +64,16 @@ const ChatPage = () => {
     }
   }
 
-  return (
+  const startCall = () => {
+    setIsCalling(true)
+  }
+
+  const endCall = () => {
+    setIsCalling(false)
+  }
+
+  return isCalling ? 
+    <Live2DView onEndCall={endCall}/> : 
     <Layout>
       <div className="relative flex h-screen overflow-hidden bg-white">
         {/* 메인 컨텐츠 영역 */}
@@ -73,6 +83,7 @@ const ChatPage = () => {
             <div className="top-4 right-4 z-10 flex justify-end">
               <Profile></Profile>
             </div>
+            
             {/* 채팅창 헤더 - 캐릭터 소개 */}
             <div className="flex justify-center pb-6">
               <div className="flex flex-col items-center">
@@ -95,9 +106,11 @@ const ChatPage = () => {
           {/* 바텀바 */}
           <div className="flex h-[110px] items-center">
             <div className="mx-auto flex w-full max-w-[762px] items-center gap-3">
+              {/* 통화 시작 버튼 */}
               <Button
                 variant="outline"
                 size="icon"
+                onClick={startCall}
                 className="flex h-[45px] w-[45px] items-center justify-center rounded-full border border-[var(--gray4)] bg-white"
               >
                 <img src="/icons/Subtract.svg" alt="Call" className="h-8 w-8" />
@@ -124,11 +137,10 @@ const ChatPage = () => {
                 </Button>
               </div>
             </div>
-          </div>
+          </div> 
         </main>
       </div>
     </Layout>
-  )
 }
 
 export default ChatPage

@@ -18,22 +18,21 @@ export class VoiceCallManager {
   private audioQueue: AudioBuffer[] = [];
   private isPlaying = false;
 
-  private startCallBtn: HTMLButtonElement | null = null;
   private recordBtn: HTMLButtonElement | null = null;
   private endCallBtn: HTMLButtonElement | null = null;
 
   private model: LAppModel | null = null;
 
   constructor(model: LAppModel) {
-    this.startCallBtn = document.getElementById("startCallBtn") as HTMLButtonElement;
     this.recordBtn = document.getElementById("recordBtn") as HTMLButtonElement;
     this.endCallBtn = document.getElementById("endCallBtn") as HTMLButtonElement;
     this.model = model;
+
     this.bindEvents();
+    this.startCall();
   }
 
   private bindEvents() {
-    this.startCallBtn.addEventListener("click", () => this.startCall());
     this.recordBtn.addEventListener("mousedown", () => this.startRecording());
     this.recordBtn.addEventListener("mouseup", () => this.stopRecording());
     this.recordBtn.addEventListener("touchstart", (e) => {
@@ -47,8 +46,7 @@ export class VoiceCallManager {
     this.endCallBtn.addEventListener("click", () => this.endCall());
   }
 
-  private toggleButtons({ start, record, end }: { start: boolean; record: boolean; end: boolean }) {
-    this.startCallBtn.disabled = !start;
+  private toggleButtons({ record, end }: { record: boolean; end: boolean }) {
     this.recordBtn.disabled = !record;
     this.endCallBtn.disabled = !end;
   }
@@ -131,7 +129,7 @@ export class VoiceCallManager {
       console.log("✅ WebSocket 연결됨");
 
       await this.initAudioProcessing();
-      this.toggleButtons({ start: false, record: true, end: true });
+      this.toggleButtons({ record: true, end: true });
     };
 
     this.socket.onmessage = (event) => {
@@ -184,7 +182,7 @@ export class VoiceCallManager {
     this.cleanupAudio();
     this.cleanupSocket();
 
-    this.toggleButtons({ start: true, record: false, end: false });
+    this.toggleButtons({ record: false, end: false });
 
     console.log("📴 통화 종료");
   }
