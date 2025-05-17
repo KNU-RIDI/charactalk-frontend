@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
@@ -15,27 +15,17 @@ const ChatPage = () => {
   const [input, setInput] = useState("")
   const [messages, setMessages] = useState<Message[]>([])
   const [isCalling, setIsCalling] = useState(false)
+  const chatRoomId = 1
 
-  useChatStream((incomingMessage) => {
+  useChatStream(chatRoomId, (incomingMessage) => {
     setMessages((prev) => [...prev, incomingMessage])
   })
 
   const handleSend = async () => {
     if (!input.trim()) return
 
-    const now = new Date()
-    const timestamp = now.toISOString().slice(0, 19)
-
-    const chatRequest = {
-      chatRoomId: 1,
-      senderId: 5,
-      charId: "cinderella",
-      message: input,
-      timestamp: new Date().toISOString().split(".")[0],
-    }
-
     try {
-      await sendMessage(chatRequest)
+      await sendMessage(chatRoomId, { message: input })
 
       setMessages((prev) => [
         ...prev,
@@ -46,7 +36,7 @@ const ChatPage = () => {
           profileImage:
             "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
           text: input,
-          timestamp,
+          timestamp: new Date().toISOString(),
           isTyping: false,
         },
       ])
@@ -72,8 +62,9 @@ const ChatPage = () => {
     setIsCalling(false)
   }
 
-  return isCalling ? 
-    <Live2DView onEndCall={endCall}/> : 
+  return isCalling ? (
+    <Live2DView onEndCall={endCall} />
+  ) : (
     <Layout>
       <div className="relative flex h-screen overflow-hidden bg-white">
         {/* 메인 컨텐츠 영역 */}
@@ -81,9 +72,8 @@ const ChatPage = () => {
           <ScrollArea className="flex-1 overflow-y-auto px-4">
             {/* 오른쪽 상단 프로필 컴포넌트 */}
             <div className="top-4 right-4 z-10 flex justify-end">
-              <Profile></Profile>
+              <Profile />
             </div>
-            
             {/* 채팅창 헤더 - 캐릭터 소개 */}
             <div className="flex justify-center pb-6">
               <div className="flex flex-col items-center">
@@ -137,10 +127,11 @@ const ChatPage = () => {
                 </Button>
               </div>
             </div>
-          </div> 
+          </div>
         </main>
       </div>
     </Layout>
+  )
 }
 
 export default ChatPage
