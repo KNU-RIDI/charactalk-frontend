@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider, Navigate, Outlet } from "react-router-dom"
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom"
 import HomePage from "../pages/Home"
 import ChatPage from "../pages/Chat"
 import LoginPage from "../pages/Login"
@@ -6,7 +6,6 @@ import SignUpPage from "../pages/SignUp"
 import MyPage from "../pages/MyPage"
 import { RouterPath } from "./path"
 import ProtectedRoute from "./ProtectedRoute"
-import Live2DView from "@/pages/Live2D"
 
 const router = createBrowserRouter([
   {
@@ -40,10 +39,6 @@ const router = createBrowserRouter([
         element: <MyPage />,
       },
     ],
-  },
-  {
-    path: RouterPath.live2d,
-    element: <Live2DView />,
   },
   {
     path: RouterPath.notFound,

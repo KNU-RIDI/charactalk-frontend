@@ -33,7 +33,7 @@ export const ViewLogicalMaxBottom = -2.0;
 export const ViewLogicalMaxTop = 2.0;
 
 // 상대 경로
-export const ResourcesPath = './src/live2d/resources/';
+export const ResourcesPath = `${window.location.origin}/Resources/`;
 
 // 모델 뒤에 있는 배경 이미지 파일
 export const BackImageName = 'back_class_normal.png';

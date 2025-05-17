@@ -11,7 +11,7 @@ const Profile = () => {
       navigate("/my-page")
     } else {
       window.location.href =
-        "https://api.charactalk.site/auth/login/google?redirect=http://localhost:3000"
+        `https://api.charactalk.site/auth/login/google?redirect=${window.location.origin}`
     }
   }
 

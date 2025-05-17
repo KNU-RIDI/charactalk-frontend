@@ -4,12 +4,12 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import ChatMessages from "./components/Bubble"
-import Profile from "@/components/Profile"
 import Layout from "@/components/Sidebar/layout"
 import { sendMessage } from "@/api/Chat/usePostMessage"
 import { Message } from "@/types/index"
 import { useChatStream } from "@/api/Chat/useChatStream"
 import Live2DView from "../Live2D"
+import Profile from "@/components/Profile"
 
 const ChatPage = () => {
   const [input, setInput] = useState("")

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "node copy_resources.cjs && vite",
     "start": "node copy_resources.cjs && vite",
-    "build": "tsc -b && node copy_resources.cjs && vite build",
+    "build": "node copy_resources.cjs && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
   },
