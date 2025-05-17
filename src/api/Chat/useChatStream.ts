@@ -3,13 +3,14 @@ import { Message } from "@/types"
 
 type OnMessageCallback = (message: Message) => void
 
-export const useChatStream = (onMessage: OnMessageCallback) => {
+export const useChatStream = (chatRoomId: number, onMessage: OnMessageCallback) => {
   const handleMessage = useCallback(onMessage, [])
 
   useEffect(() => {
-    const eventSource = new EventSource(`${import.meta.env.VITE_API_URL}/chat/stream?memberId=5`, {
-      withCredentials: true,
-    } as any)
+    const eventSource = new EventSource(
+      `${import.meta.env.VITE_API_URL}/chat-room/${chatRoomId}/stream`,
+      { withCredentials: true } as any,
+    )
 
     let messageBuffer = ""
 
@@ -23,7 +24,6 @@ export const useChatStream = (onMessage: OnMessageCallback) => {
 
         if (data.isFinal) {
           let cleanText = messageBuffer.trim()
-
           cleanText = cleanText.replace(/^[^:\n]{1,20}:\s*/, "")
 
           if (!cleanText) {
@@ -41,8 +41,6 @@ export const useChatStream = (onMessage: OnMessageCallback) => {
             isTyping: false,
           }
 
-          console.log("최종 메시지:", finalMessage)
-
           handleMessage(finalMessage)
           messageBuffer = ""
         }
@@ -59,5 +57,5 @@ export const useChatStream = (onMessage: OnMessageCallback) => {
     return () => {
       eventSource.close()
     }
-  }, [handleMessage])
+  }, [chatRoomId, handleMessage])
 }
