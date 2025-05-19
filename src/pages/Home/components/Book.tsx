@@ -40,7 +40,7 @@ export default function BookSection() {
                 alt={book.title}
                 className="h-[200px] w-[140px] rounded-md object-cover"
               />
-              <span className="mt-2 mb-2 text-sm">{book.title}</span>
+              <span className="mt-2 mb-2 text-sm font-semibold">{book.title}</span>
             </div>
           ))}
         </div>
