@@ -29,7 +29,7 @@ export default function BestCharacters() {
               className="h-10 w-10 rounded-full border-1 border-gray-300 object-cover"
             />
             <div className="text-sm">
-              <div className="font-medium">{char.name}</div>
+              <div className="font-semibold">{char.name}</div>
               <div className="text-gray-500">{char.englishName}</div>
             </div>
           </div>

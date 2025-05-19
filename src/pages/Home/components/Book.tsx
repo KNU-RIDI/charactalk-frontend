@@ -10,7 +10,6 @@ type Story = {
 
 export default function BookSection() {
   const [westernBooks, setWesternBooks] = useState<Story[]>([])
-  const [koreanBooks, setKoreanBooks] = useState<Story[]>([])
 
   useEffect(() => {
     const fetchStories = async () => {
@@ -20,10 +19,8 @@ export default function BookSection() {
         console.log("받아온 스토리 데이터:", data)
 
         const western = data.filter((story) => story.storyType.includes("WESTERN"))
-        const korean = data.filter((story) => story.storyType.includes("EASTERN"))
 
         setWesternBooks(western)
-        setKoreanBooks(korean)
       } catch (error) {
         console.error("스토리 목록 불러오기 실패:", error)
       }
@@ -43,7 +40,7 @@ export default function BookSection() {
                 alt={book.title}
                 className="h-[200px] w-[140px] rounded-md object-cover"
               />
-              <span className="mt-2 mb-2 text-sm">{book.title}</span>
+              <span className="mt-2 mb-2 text-sm font-semibold">{book.title}</span>
             </div>
           ))}
         </div>
