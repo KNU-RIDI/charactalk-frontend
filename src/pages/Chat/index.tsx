@@ -6,10 +6,11 @@ import { Input } from "@/components/ui/input"
 import ChatMessages from "./components/Bubble"
 import Layout from "@/components/Sidebar/layout"
 import { sendMessage } from "@/api/Chat/usePostMessage"
-import { Message } from "@/types/index"
+import { Message, CreateChatRoomRequest, CreateChatRoomResponse } from "@/types/index"
 import { useChatStream } from "@/api/Chat/useChatStream"
 import Live2DView from "../Live2D"
 import Profile from "@/components/Profile"
+import { createChatRoom } from "@/api/ChatRoom/useCreateChatRoom"
 
 const ChatPage = () => {
   const [input, setInput] = useState("")
@@ -62,6 +63,21 @@ const ChatPage = () => {
     setIsCalling(false)
   }
 
+  const handleCreateChatRoom = async () => {
+    try {
+      const request: CreateChatRoomRequest = {
+        characterId: 1,
+        name: "채팅방",
+        type: "SINGLE",
+      }
+      const res: CreateChatRoomResponse = await createChatRoom(request)
+      console.log("생성된 채팅방:", res.chatRoomId, res.character.name)
+      //alert(`채팅방 생성 완료!\n이름: ${request.name}\n캐릭터: ${res.character.name}`)
+    } catch (err) {
+      console.error("채팅방 생성 실패", err)
+    }
+  }
+
   return isCalling ? (
     <Live2DView onEndCall={endCall} />
   ) : (
@@ -71,7 +87,15 @@ const ChatPage = () => {
         <main className="flex flex-1 flex-col">
           <ScrollArea className="flex-1 overflow-y-auto px-4">
             {/* 오른쪽 상단 프로필 컴포넌트 */}
-            <div className="top-4 right-4 z-10 flex justify-end">
+            <div className="top-4 right-4 z-10 flex justify-between">
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={handleCreateChatRoom}
+                className="mr-auto flex h-[36px] w-[36px] items-center justify-center rounded-full border border-[var(--gray4)] bg-white"
+              >
+                <span className="text-xl font-bold">+</span>
+              </Button>
               <Profile />
             </div>
             {/* 채팅창 헤더 - 캐릭터 소개 */}
