@@ -35,30 +35,15 @@ export default function BookSection() {
     <div className="mb-10">
       <div>
         <h2 className="text-m mb-4 font-semibold">서양 고전 동화</h2>
-        <div className="flex gap-4 overflow-x-auto">
+        <div className="flex gap-0.5 overflow-x-auto">
           {westernBooks.map((book) => (
-            <div key={book.storyId} className="flex flex-col items-center">
+            <div key={book.storyId} className="flex min-w-[160px] flex-col items-center">
               <img
                 src={book.imageUrl}
                 alt={book.title}
                 className="h-[200px] w-[140px] rounded-md object-cover"
               />
-              <span className="mt-4 text-sm">{book.title}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div>
-        <h2 className="text-m mt-10 mb-4 font-semibold">한국 전래 동화</h2>
-        <div className="flex gap-4 overflow-x-auto">
-          {koreanBooks.map((book) => (
-            <div key={book.storyId} className="flex flex-col items-center">
-              <img
-                src={book.imageUrl}
-                alt={book.title}
-                className="h-[200px] w-[140px] rounded-md object-cover"
-              />
-              <span className="mt-4 text-sm">{book.title}</span>
+              <span className="mt-2 mb-2 text-sm">{book.title}</span>
             </div>
           ))}
         </div>
