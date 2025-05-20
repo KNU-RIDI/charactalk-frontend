@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
@@ -17,6 +17,12 @@ const ChatPage = () => {
   const [isCalling, setIsCalling] = useState(false)
   const [isReplying, setIsReplying] = useState(false)
   const chatRoomId = 1
+
+  const bottomRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [messages])
 
   useChatStream(chatRoomId, (incomingMessage) => {
     setIsReplying(true)
@@ -92,7 +98,7 @@ const ChatPage = () => {
       <main className="flex flex-1 flex-col">
         <ScrollArea className="flex-1 overflow-y-auto px-4">
           {/* 오른쪽 상단 프로필 컴포넌트 */}
-          <div className="absolute top-4 right-4 z-10">
+          <div className="top-20 right-10 z-10 flex justify-end pt-4 pr-2">
             <Profile />
           </div>
           {/* 채팅창 헤더 - 캐릭터 소개 */}
@@ -110,8 +116,10 @@ const ChatPage = () => {
               </p>
             </div>
           </div>
+
           {/* Chat Messages */}
           <ChatMessages messages={messages} formatTime={formatTime} />
+          <div ref={bottomRef} />
         </ScrollArea>
 
         {/* 바텀바 */}
