@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
@@ -17,6 +17,12 @@ const ChatPage = () => {
   const [isCalling, setIsCalling] = useState(false)
   const [isReplying, setIsReplying] = useState(false)
   const chatRoomId = 1
+
+  const bottomRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [messages])
 
   useChatStream(chatRoomId, (incomingMessage) => {
     setIsReplying(true)
@@ -110,8 +116,10 @@ const ChatPage = () => {
               </p>
             </div>
           </div>
+
           {/* Chat Messages */}
           <ChatMessages messages={messages} formatTime={formatTime} />
+          <div ref={bottomRef} />
         </ScrollArea>
 
         {/* 바텀바 */}
