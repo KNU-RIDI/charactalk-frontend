@@ -69,7 +69,14 @@ const ChatPage = () => {
   }
 
   const formatTime = (timestamp: string) => {
-    const date = new Date(timestamp)
+    let date = new Date(timestamp)
+
+    if (timestamp.includes("T") && !timestamp.endsWith("Z")) {
+      date = new Date(timestamp + "Z")
+    } else {
+      date = new Date(timestamp)
+    }
+
     const hour = date.getHours()
     const minute = date.getMinutes().toString().padStart(2, "0")
     const ampm = hour >= 12 ? "PM" : "AM"
