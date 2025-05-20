@@ -68,6 +68,14 @@ const ChatPage = () => {
     setIsCalling(false)
   }
 
+  const formatTime = (timestamp: string) => {
+    const date = new Date(timestamp)
+    const hour = date.getHours()
+    const minute = date.getMinutes().toString().padStart(2, "0")
+    const ampm = hour >= 12 ? "PM" : "AM"
+    return `${hour}:${minute}${ampm}`
+  }
+
   return isCalling ? (
     <Live2DView onEndCall={endCall} />
   ) : (
@@ -96,7 +104,7 @@ const ChatPage = () => {
             </div>
           </div>
           {/* Chat Messages */}
-          <ChatMessages messages={messages} />
+          <ChatMessages messages={messages} formatTime={formatTime} />
         </ScrollArea>
 
         {/* 바텀바 */}
