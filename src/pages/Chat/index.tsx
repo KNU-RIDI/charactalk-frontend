@@ -15,14 +15,20 @@ const ChatPage = () => {
   const [input, setInput] = useState("")
   const [messages, setMessages] = useState<Message[]>([])
   const [isCalling, setIsCalling] = useState(false)
+  const [isReplying, setIsReplying] = useState(false)
   const chatRoomId = 1
 
   useChatStream(chatRoomId, (incomingMessage) => {
+    setIsReplying(true)
     setMessages((prev) => [...prev, incomingMessage])
+
+    setTimeout(() => {
+      setIsReplying(false)
+    }, 500)
   })
 
   const handleSend = async () => {
-    if (!input.trim()) return
+    if (!input.trim() || isReplying) return
 
     try {
       await sendMessage(chatRoomId, { message: input })
@@ -48,7 +54,7 @@ const ChatPage = () => {
   }
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !isReplying) {
       e.preventDefault()
       handleSend()
     }
@@ -60,6 +66,21 @@ const ChatPage = () => {
 
   const endCall = () => {
     setIsCalling(false)
+  }
+
+  const formatTime = (timestamp: string) => {
+    let date = new Date(timestamp)
+
+    if (timestamp.includes("T") && !timestamp.endsWith("Z")) {
+      date = new Date(timestamp + "Z")
+    } else {
+      date = new Date(timestamp)
+    }
+
+    const hour = date.getHours()
+    const minute = date.getMinutes().toString().padStart(2, "0")
+    const ampm = hour >= 12 ? "PM" : "AM"
+    return `${hour}:${minute}${ampm}`
   }
 
   return isCalling ? (
@@ -90,7 +111,7 @@ const ChatPage = () => {
             </div>
           </div>
           {/* Chat Messages */}
-          <ChatMessages messages={messages} />
+          <ChatMessages messages={messages} formatTime={formatTime} />
         </ScrollArea>
 
         {/* 바텀바 */}
@@ -111,6 +132,7 @@ const ChatPage = () => {
               <Input
                 type="text"
                 value={input}
+                disabled={isReplying}
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Type a message..."
@@ -121,6 +143,7 @@ const ChatPage = () => {
                 variant="secondary"
                 size="icon"
                 onClick={handleSend}
+                disabled={isReplying}
                 className="absolute top-[5px] right-[5px] flex h-[41px] w-[62px] items-center justify-center rounded-full border-[1px] border-[var(--gray4)] bg-white"
               >
                 <img src="/icons/Polygon13.svg" alt="Send" className="h-8 w-8" />

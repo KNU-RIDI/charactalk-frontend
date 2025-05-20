@@ -4,9 +4,10 @@ import { Message } from "@/types/index"
 
 interface ChatMessagesProps {
   messages: Message[]
+  formatTime: (timestamp: string) => string
 }
 
-const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
+const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, formatTime }) => {
   return (
     <div>
       {messages.map((message: Message) => {
@@ -54,7 +55,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({ messages }) => {
                   isSelf ? "text-right" : ""
                 }`}
               >
-                {message.timestamp}
+                {formatTime(message.timestamp)}
               </span>
             </div>
 
