@@ -1,12 +1,3 @@
-export interface Message {
-  id: number
-  sender: string
-  profileImage: string
-  text: string
-  isTyping: boolean
-  timestamp: string
-}
-
 export type ChatRoomType = "SINGLE" | "GROUP"
 
 export interface CreateChatRoomRequest {
@@ -34,26 +25,6 @@ export interface Message {
   text: string
   isTyping: boolean
   timestamp: string
-}
-
-export type ChatRoomType = "SINGLE" | "GROUP"
-
-export interface CreateChatRoomRequest {
-  characterId: number
-  name: string
-  type: ChatRoomType
-}
-
-export interface CreateChatRoomResponse {
-  chatRoomId: number
-  character: CharacterSummary
-}
-
-export interface CharacterSummary {
-  characterId: number
-  name: string
-  description: string
-  imageUrl: string
 }
 
 export interface ChatRoomDetail {
@@ -64,4 +35,12 @@ export interface ChatRoomDetail {
   characterName: string
   characterDescription: string
   characterImageUrl: string
+}
+
+export interface ChatRoomCardResponse {
+  chatRoomId: number
+  characterName: string
+  characterImageUrl: string
+  lastMessage: string
+  lastMessageTime: string
 }
