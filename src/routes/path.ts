@@ -6,6 +6,7 @@ export const RouterPath = {
   login: "/login",
   myPage: "/my-page",
   live2d: "/live2d",
+  search: "/search",
   notFound: "*",
 }
 

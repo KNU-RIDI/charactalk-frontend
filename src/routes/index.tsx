@@ -4,6 +4,7 @@ import ChatPage from "../pages/Chat"
 import LoginPage from "../pages/Login"
 import SignUpPage from "../pages/SignUp"
 import MyPage from "../pages/MyPage"
+import SearchPage from "../pages/Search"
 import { RouterPath } from "./path"
 import ProtectedRoute from "./ProtectedRoute"
 
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
         element: <MyPage />,
       },
     ],
+  },
+  {
+    path: RouterPath.search,
+    element: <SearchPage />,
   },
   {
     path: RouterPath.notFound,
