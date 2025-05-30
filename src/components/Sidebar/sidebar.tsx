@@ -26,6 +26,8 @@ export default function Sidebar() {
       const res: CreateChatRoomResponse = await createChatRoom(request)
       console.log("생성된 채팅방:", res.chatRoomId, res.character.name)
       //alert(`채팅방 생성 완료!\n이름: ${request.name}\n캐릭터: ${res.character.name}`)
+      await fetchChatRooms()
+      navigate(`/chat/${res.chatRoomId}`)
     } catch (err) {
       console.error("채팅방 생성 실패", err)
     }
@@ -47,13 +49,13 @@ export default function Sidebar() {
       </div>
 
       <div className="flex flex-col gap-8 overflow-y-auto">
-        {chatRooms.map((chat) => (
+        {chatRooms.map((chat, index) => (
           <div
             key={chat.chatRoomId}
             onClick={() => navigate(`/chat/${chat.chatRoomId}`)}
             className="flex cursor-pointer items-center gap-2 px-0.5 hover:bg-gray-100"
           >
-            <span className="text-bold w-2 text-center">{chat.chatRoomId}</span>
+            <span className="text-bold w-2 text-center">{index + 1}</span>
             <div className="mx-1">
               <img
                 src={chat.characterImageUrl}

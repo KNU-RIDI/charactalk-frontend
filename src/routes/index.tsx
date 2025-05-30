@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     element: <ProtectedRoute />,
     children: [
       {
-        path: RouterPath.chat,
+        path: ":id",
         element: <ChatPage />,
       },
     ],

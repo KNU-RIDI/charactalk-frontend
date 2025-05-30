@@ -1,24 +1,33 @@
 import { useState, useRef, useEffect } from "react"
+import { useParams } from "react-router-dom"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import ChatMessages from "./components/Bubble"
 import { sendMessage } from "@/api/Chat/usePostMessage"
-import { Message } from "@/types/index"
 import { useChatStream } from "@/api/Chat/useChatStream"
+import { getChatRoomDetail } from "@/api/ChatRoom/useGetChatRoomDetail"
+import { getMessages } from "@/api/Chat/useGetMessages"
+import { Message, ChatRoomDetail } from "@/types/index"
 import Live2DView from "../Live2D"
 import Profile from "@/components/Profile"
 import Sidebar from "@/components/Sidebar/sidebar"
 
 const ChatPage = () => {
+  const { id } = useParams()
+  const chatRoomId = Number(id)
+
   const [input, setInput] = useState("")
   const [messages, setMessages] = useState<Message[]>([])
   const [isCalling, setIsCalling] = useState(false)
   const [isReplying, setIsReplying] = useState(false)
-  const chatRoomId = 1
+  const [chatRoomDetail, setChatRoomDetail] = useState<ChatRoomDetail | null>(null)
+  const [hasNext, setHasNext] = useState(true)
+  const [cursor, setCursor] = useState<number | undefined>(undefined)
 
   const bottomRef = useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -32,6 +41,65 @@ const ChatPage = () => {
       setIsReplying(false)
     }, 500)
   })
+
+  useEffect(() => {
+    if (!chatRoomId) return
+
+    getChatRoomDetail(chatRoomId)
+      .then((data) => {
+        setChatRoomDetail(data)
+      })
+      .catch((err) => {
+        console.error("채팅방 상세 정보 조회 실패:", err)
+      })
+  }, [chatRoomId])
+
+  useEffect(() => {
+    if (!chatRoomId) return
+
+    const fetchInitialMessages = async () => {
+      try {
+        const res = await getMessages(chatRoomId)
+        setMessages(res.content)
+        setHasNext(res.hasNext)
+        if (res.content.length > 0) {
+          setCursor(res.content[0].id)
+        }
+      } catch (error) {
+        console.error("채팅 메시지 조회 실패:", error)
+      }
+    }
+
+    fetchInitialMessages()
+  }, [chatRoomId])
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!scrollRef.current) return
+      if (scrollRef.current.scrollTop === 0) {
+        loadPreviousMessages()
+      }
+    }
+
+    const el = scrollRef.current
+    el?.addEventListener("scroll", onScroll)
+    return () => el?.removeEventListener("scroll", onScroll)
+  }, [cursor, hasNext])
+
+  const loadPreviousMessages = async () => {
+    if (!chatRoomId || !hasNext) return
+
+    try {
+      const res = await getMessages(chatRoomId, cursor)
+      setMessages((prev) => [...res.content, ...prev])
+      setHasNext(res.hasNext)
+      if (res.content.length > 0) {
+        setCursor(res.content[0].id)
+      }
+    } catch (error) {
+      console.error("이전 메시지 불러오기 실패:", error)
+    }
+  }
 
   const handleSend = async () => {
     if (!input.trim() || isReplying) return
@@ -97,29 +165,37 @@ const ChatPage = () => {
       {/* 메인 컨텐츠 영역 */}
       <main className="flex flex-1 flex-col">
         <ScrollArea className="flex-1 overflow-y-auto px-4">
-          {/* 오른쪽 상단 프로필 컴포넌트 */}
-          <div className="top-20 right-10 z-10 flex justify-end pt-4 pr-2">
-            <Profile />
-          </div>
-          {/* 채팅창 헤더 - 캐릭터 소개 */}
-          <div className="flex justify-center pt-6 pb-6">
-            <div className="flex flex-col items-center">
-              <Avatar className="h-[130px] w-[130px]">
-                <AvatarImage
-                  src="https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000"
-                  alt="Cinderella"
-                />
-              </Avatar>
-              <h2 className="mt-4 text-2xl font-semibold tracking-[-0.96px]">신데렐라</h2>
-              <p className="mt-1 text-[15px] tracking-[-0.60px]">
-                저는 12시가 되면 돌아가야만 해요
-              </p>
+          <div ref={scrollRef}>
+            {/* 오른쪽 상단 프로필 컴포넌트 */}
+            <div className="top-20 right-10 z-10 flex justify-end pt-4 pr-2">
+              <Profile />
             </div>
-          </div>
+            {/* 채팅창 헤더 */}
+            <div className="flex justify-center pt-6 pb-6">
+              <div className="flex flex-col items-center">
+                <Avatar className="h-[130px] w-[130px]">
+                  <AvatarImage
+                    src={chatRoomDetail?.characterImageUrl ?? ""}
+                    alt={chatRoomDetail?.characterName ?? "캐릭터"}
+                  />
+                </Avatar>
+                <h2 className="mt-4 text-2xl font-semibold tracking-[-0.96px]">
+                  {chatRoomDetail?.characterName ?? "캐릭터 이름"}
+                </h2>
+                <p className="mt-1 text-[15px] tracking-[-0.60px]">
+                  {chatRoomDetail?.characterDescription ?? "캐릭터 소개가 없습니다."}
+                </p>
+              </div>
+            </div>
 
-          {/* Chat Messages */}
-          <ChatMessages messages={messages} formatTime={formatTime} />
-          <div ref={bottomRef} />
+            {/* Chat Messages */}
+            <ChatMessages
+              messages={messages}
+              formatTime={formatTime}
+              chatRoomDetail={chatRoomDetail}
+            />
+            <div ref={bottomRef} />
+          </div>
         </ScrollArea>
 
         {/* 바텀바 */}

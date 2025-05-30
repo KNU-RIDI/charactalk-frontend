@@ -1,24 +1,26 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
-import { Message } from "@/types/index"
+import { Message, ChatRoomDetail } from "@/types/index"
 
 interface ChatMessagesProps {
   messages: Message[]
   formatTime: (timestamp: string) => string
+  chatRoomDetail: ChatRoomDetail | null
 }
 
-const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, formatTime }) => {
+const ChatMessages: React.FC<ChatMessagesProps> = ({ messages, formatTime, chatRoomDetail }) => {
   return (
     <div>
       {messages.map((message: Message) => {
         const isSelf = message.sender === "self"
+        const profileImage = !isSelf ? chatRoomDetail?.characterImageUrl : undefined
 
         return (
           <div key={message.id} className={`flex ${isSelf ? "justify-end" : "justify-start"} mb-3`}>
             {/* 캐릭터 프사 */}
             {!isSelf && (
               <Avatar className="mr-2 h-[50px] w-[50px] flex-shrink-0">
-                <AvatarImage src={message.profileImage} alt="Profile" />
+                <AvatarImage src={profileImage} alt="Profile" />
               </Avatar>
             )}
 
