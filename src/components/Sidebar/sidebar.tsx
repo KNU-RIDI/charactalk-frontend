@@ -63,9 +63,11 @@ export default function Sidebar() {
                 className="h-10 w-10 rounded-full"
               />
             </div>
-            <div className="flex-1">
+            <div className="min-w-0 flex-1">
               <div className="mt-1 mb-1 text-sm font-semibold">{chat.characterName}</div>
-              <div className="text-xs text-gray-500">{chat.lastMessage}</div>
+              <div className="truncate overflow-hidden text-xs whitespace-nowrap text-gray-500">
+                {chat.lastMessage}
+              </div>
             </div>
             <div className="flex flex-col items-end">
               <div className="text-xs text-gray-500">{formatTime(chat.lastMessageTime)}</div>
