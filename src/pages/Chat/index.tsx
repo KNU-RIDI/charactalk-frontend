@@ -8,6 +8,7 @@ import ChatMessages from "./components/Bubble"
 import { sendMessage } from "@/api/Chat/usePostMessage"
 import { useChatStream } from "@/api/Chat/useChatStream"
 import { getChatRoomDetail } from "@/api/ChatRoom/useGetChatRoomDetail"
+import { getMessages } from "@/api/Chat/useGetMessages"
 import { Message, ChatRoomDetail } from "@/types/index"
 import Live2DView from "../Live2D"
 import Profile from "@/components/Profile"
@@ -22,8 +23,11 @@ const ChatPage = () => {
   const [isCalling, setIsCalling] = useState(false)
   const [isReplying, setIsReplying] = useState(false)
   const [chatRoomDetail, setChatRoomDetail] = useState<ChatRoomDetail | null>(null)
+  const [hasNext, setHasNext] = useState(true)
+  const [cursor, setCursor] = useState<number | undefined>(undefined)
 
   const bottomRef = useRef<HTMLDivElement>(null)
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" })
@@ -49,6 +53,38 @@ const ChatPage = () => {
         console.error("채팅방 상세 정보 조회 실패:", err)
       })
   }, [chatRoomId])
+
+  useEffect(() => {
+    if (!chatRoomId) return
+
+    const fetchInitialMessages = async () => {
+      try {
+        const res = await getMessages(chatRoomId)
+        setMessages(res.content)
+        setHasNext(res.hasNext)
+        if (res.content.length > 0) {
+          setCursor(res.content[0].id)
+        }
+      } catch (error) {
+        console.error("채팅 메시지 조회 실패:", error)
+      }
+    }
+
+    fetchInitialMessages()
+  }, [chatRoomId])
+
+  useEffect(() => {
+    const onScroll = () => {
+      if (!scrollRef.current) return
+      if (scrollRef.current.scrollTop === 0) {
+        loadPreviousMessages()
+      }
+    }
+
+    const el = scrollRef.current
+    el?.addEventListener("scroll", onScroll)
+    return () => el?.removeEventListener("scroll", onScroll)
+  }, [cursor, hasNext])
 
   const handleSend = async () => {
     if (!input.trim() || isReplying) return
