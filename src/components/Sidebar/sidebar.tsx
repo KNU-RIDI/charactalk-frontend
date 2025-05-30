@@ -26,6 +26,7 @@ export default function Sidebar() {
       const res: CreateChatRoomResponse = await createChatRoom(request)
       console.log("생성된 채팅방:", res.chatRoomId, res.character.name)
       //alert(`채팅방 생성 완료!\n이름: ${request.name}\n캐릭터: ${res.character.name}`)
+      navigate(`/chat/${res.chatRoomId}`)
     } catch (err) {
       console.error("채팅방 생성 실패", err)
     }
