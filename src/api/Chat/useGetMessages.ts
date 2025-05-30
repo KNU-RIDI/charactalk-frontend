@@ -1,8 +1,8 @@
 import { api } from "@/api/instance"
-import { Message } from "@/types"
+import { RawMessage } from "@/types"
 
 interface GetMessagesResponse {
-  content: Message[]
+  content: RawMessage[]
   hasNext: boolean
 }
 
@@ -17,5 +17,7 @@ export const getMessages = async (
       size,
     },
   })
+
+  console.log("📦 getMessages 응답:", res.data)
   return res.data
 }
