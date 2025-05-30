@@ -49,13 +49,13 @@ export default function Sidebar() {
       </div>
 
       <div className="flex flex-col gap-8 overflow-y-auto">
-        {chatRooms.map((chat) => (
+        {chatRooms.map((chat, index) => (
           <div
             key={chat.chatRoomId}
             onClick={() => navigate(`/chat/${chat.chatRoomId}`)}
             className="flex cursor-pointer items-center gap-2 px-0.5 hover:bg-gray-100"
           >
-            <span className="text-bold w-2 text-center">{chat.chatRoomId}</span>
+            <span className="text-bold w-2 text-center">{index + 1}</span>
             <div className="mx-1">
               <img
                 src={chat.characterImageUrl}
