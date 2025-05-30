@@ -86,6 +86,21 @@ const ChatPage = () => {
     return () => el?.removeEventListener("scroll", onScroll)
   }, [cursor, hasNext])
 
+  const loadPreviousMessages = async () => {
+    if (!chatRoomId || !hasNext) return
+
+    try {
+      const res = await getMessages(chatRoomId, cursor)
+      setMessages((prev) => [...res.content, ...prev])
+      setHasNext(res.hasNext)
+      if (res.content.length > 0) {
+        setCursor(res.content[0].id)
+      }
+    } catch (error) {
+      console.error("이전 메시지 불러오기 실패:", error)
+    }
+  }
+
   const handleSend = async () => {
     if (!input.trim() || isReplying) return
 
