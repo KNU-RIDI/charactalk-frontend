@@ -165,31 +165,37 @@ const ChatPage = () => {
       {/* 메인 컨텐츠 영역 */}
       <main className="flex flex-1 flex-col">
         <ScrollArea className="flex-1 overflow-y-auto px-4">
-          {/* 오른쪽 상단 프로필 컴포넌트 */}
-          <div className="top-20 right-10 z-10 flex justify-end pt-4 pr-2">
-            <Profile />
-          </div>
-          {/* 채팅창 헤더 */}
-          <div className="flex justify-center pt-6 pb-6">
-            <div className="flex flex-col items-center">
-              <Avatar className="h-[130px] w-[130px]">
-                <AvatarImage
-                  src={chatRoomDetail?.characterImageUrl ?? ""}
-                  alt={chatRoomDetail?.characterName ?? "캐릭터"}
-                />
-              </Avatar>
-              <h2 className="mt-4 text-2xl font-semibold tracking-[-0.96px]">
-                {chatRoomDetail?.characterName ?? "캐릭터 이름"}
-              </h2>
-              <p className="mt-1 text-[15px] tracking-[-0.60px]">
-                {chatRoomDetail?.characterDescription ?? "캐릭터 소개가 없습니다."}
-              </p>
+          <div ref={scrollRef}>
+            {/* 오른쪽 상단 프로필 컴포넌트 */}
+            <div className="top-20 right-10 z-10 flex justify-end pt-4 pr-2">
+              <Profile />
             </div>
-          </div>
+            {/* 채팅창 헤더 */}
+            <div className="flex justify-center pt-6 pb-6">
+              <div className="flex flex-col items-center">
+                <Avatar className="h-[130px] w-[130px]">
+                  <AvatarImage
+                    src={chatRoomDetail?.characterImageUrl ?? ""}
+                    alt={chatRoomDetail?.characterName ?? "캐릭터"}
+                  />
+                </Avatar>
+                <h2 className="mt-4 text-2xl font-semibold tracking-[-0.96px]">
+                  {chatRoomDetail?.characterName ?? "캐릭터 이름"}
+                </h2>
+                <p className="mt-1 text-[15px] tracking-[-0.60px]">
+                  {chatRoomDetail?.characterDescription ?? "캐릭터 소개가 없습니다."}
+                </p>
+              </div>
+            </div>
 
-          {/* Chat Messages */}
-          <ChatMessages messages={messages} formatTime={formatTime} />
-          <div ref={bottomRef} />
+            {/* Chat Messages */}
+            <ChatMessages
+              messages={messages}
+              formatTime={formatTime}
+              chatRoomDetail={chatRoomDetail}
+            />
+            <div ref={bottomRef} />
+          </div>
         </ScrollArea>
 
         {/* 바텀바 */}
