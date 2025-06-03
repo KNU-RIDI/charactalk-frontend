@@ -9,7 +9,7 @@ import { sendMessage } from "@/api/Chat/usePostMessage"
 import { useChatStream } from "@/api/Chat/useChatStream"
 import { getChatRoomDetail } from "@/api/ChatRoom/useGetChatRoomDetail"
 import { getMessages } from "@/api/Chat/useGetMessages"
-import { Message, ChatRoomDetail } from "@/types/index"
+import { Message, ChatRoomDetail, RawMessage } from "@/types/index"
 import Live2DView from "../Live2D"
 import Profile from "@/components/Profile"
 import Sidebar from "@/components/Sidebar/sidebar"
@@ -55,15 +55,28 @@ const ChatPage = () => {
   }, [chatRoomId])
 
   useEffect(() => {
-    if (!chatRoomId) return
+    if (!chatRoomId || !chatRoomDetail) return
 
     const fetchInitialMessages = async () => {
       try {
         const res = await getMessages(chatRoomId)
-        setMessages(res.content)
+        const mapped: Message[] = res.content
+          .map((msg: RawMessage) => ({
+            id: msg.chatId,
+            sender: msg.senderType === "MEMBER" ? "self" : "other",
+            text: msg.message,
+            timestamp: msg.timestamp,
+            profileImage:
+              msg.senderType === "CHARACTER" && chatRoomDetail.characterImageUrl
+                ? chatRoomDetail.characterImageUrl
+                : "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
+            isTyping: false,
+          }))
+          .reverse()
+        setMessages(mapped)
         setHasNext(res.hasNext)
         if (res.content.length > 0) {
-          setCursor(res.content[0].id)
+          setCursor(res.content[0].chatId)
         }
       } catch (error) {
         console.error("채팅 메시지 조회 실패:", error)
@@ -71,7 +84,7 @@ const ChatPage = () => {
     }
 
     fetchInitialMessages()
-  }, [chatRoomId])
+  }, [chatRoomId, chatRoomDetail])
 
   useEffect(() => {
     const onScroll = () => {
@@ -87,14 +100,25 @@ const ChatPage = () => {
   }, [cursor, hasNext])
 
   const loadPreviousMessages = async () => {
-    if (!chatRoomId || !hasNext) return
+    if (!chatRoomId || !hasNext || !chatRoomDetail) return
 
     try {
       const res = await getMessages(chatRoomId, cursor)
-      setMessages((prev) => [...res.content, ...prev])
+      const mapped: Message[] = res.content.map((msg: RawMessage) => ({
+        id: msg.chatId,
+        sender: msg.senderType === "MEMBER" ? "self" : "other",
+        text: msg.message,
+        timestamp: msg.timestamp,
+        profileImage:
+          msg.senderType === "CHARACTER" && chatRoomDetail.characterImageUrl
+            ? chatRoomDetail.characterImageUrl
+            : "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
+        isTyping: false,
+      }))
+      setMessages((prev) => [...mapped, ...prev])
       setHasNext(res.hasNext)
       if (res.content.length > 0) {
-        setCursor(res.content[0].id)
+        setCursor(res.content[0].chatId)
       }
     } catch (error) {
       console.error("이전 메시지 불러오기 실패:", error)
@@ -143,18 +167,14 @@ const ChatPage = () => {
   }
 
   const formatTime = (timestamp: string) => {
-    let date = new Date(timestamp)
+    const date = new Date(timestamp)
 
-    if (timestamp.includes("T") && !timestamp.endsWith("Z")) {
-      date = new Date(timestamp + "Z")
-    } else {
-      date = new Date(timestamp)
-    }
+    const hours = date.getHours()
+    const minutes = date.getMinutes().toString().padStart(2, "0")
+    const ampm = hours >= 12 ? "PM" : "AM"
+    const formattedHour = (hours % 12 || 12).toString()
 
-    const hour = date.getHours()
-    const minute = date.getMinutes().toString().padStart(2, "0")
-    const ampm = hour >= 12 ? "PM" : "AM"
-    return `${hour}:${minute}${ampm}`
+    return `${formattedHour}:${minutes}${ampm}`
   }
 
   return isCalling ? (

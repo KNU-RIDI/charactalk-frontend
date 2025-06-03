@@ -27,6 +27,14 @@ export interface Message {
   timestamp: string
 }
 
+export interface RawMessage {
+  chatId: number
+  senderType: "MEMBER" | "CHARACTER"
+  message: string
+  timestamp: string
+  characterId: number | null
+}
+
 export interface ChatRoomDetail {
   chatRoomId: number
   name: string
