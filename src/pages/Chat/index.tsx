@@ -60,17 +60,19 @@ const ChatPage = () => {
     const fetchInitialMessages = async () => {
       try {
         const res = await getMessages(chatRoomId)
-        const mapped: Message[] = res.content.map((msg: RawMessage) => ({
-          id: msg.chatId,
-          sender: msg.senderType === "MEMBER" ? "self" : "other",
-          text: msg.message,
-          timestamp: msg.timestamp,
-          profileImage:
-            msg.senderType === "CHARACTER" && chatRoomDetail.characterImageUrl
-              ? chatRoomDetail.characterImageUrl
-              : "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
-          isTyping: false,
-        }))
+        const mapped: Message[] = res.content
+          .map((msg: RawMessage) => ({
+            id: msg.chatId,
+            sender: msg.senderType === "MEMBER" ? "self" : "other",
+            text: msg.message,
+            timestamp: msg.timestamp,
+            profileImage:
+              msg.senderType === "CHARACTER" && chatRoomDetail.characterImageUrl
+                ? chatRoomDetail.characterImageUrl
+                : "https://github.com/user-attachments/assets/1f81de33-1b45-45b4-8474-ad33dc558e08",
+            isTyping: false,
+          }))
+          .reverse()
         setMessages(mapped)
         setHasNext(res.hasNext)
         if (res.content.length > 0) {
@@ -163,7 +165,6 @@ const ChatPage = () => {
   const endCall = () => {
     setIsCalling(false)
   }
-
   const formatTime = (timestamp: string) => {
     let date = new Date(timestamp)
 
