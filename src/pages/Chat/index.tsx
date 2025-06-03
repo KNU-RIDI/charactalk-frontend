@@ -165,19 +165,16 @@ const ChatPage = () => {
   const endCall = () => {
     setIsCalling(false)
   }
+
   const formatTime = (timestamp: string) => {
-    let date = new Date(timestamp)
+    const date = new Date(timestamp)
 
-    if (timestamp.includes("T") && !timestamp.endsWith("Z")) {
-      date = new Date(timestamp + "Z")
-    } else {
-      date = new Date(timestamp)
-    }
+    const hours = date.getHours()
+    const minutes = date.getMinutes().toString().padStart(2, "0")
+    const ampm = hours >= 12 ? "PM" : "AM"
+    const formattedHour = (hours % 12 || 12).toString()
 
-    const hour = date.getHours()
-    const minute = date.getMinutes().toString().padStart(2, "0")
-    const ampm = hour >= 12 ? "PM" : "AM"
-    return `${hour}:${minute}${ampm}`
+    return `${formattedHour}:${minutes}${ampm}`
   }
 
   return isCalling ? (
