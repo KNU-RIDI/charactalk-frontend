@@ -37,7 +37,9 @@ export const useChatStream = (chatRoomId: number, onMessage: OnMessageCallback) 
             profileImage:
               "https://github.com/user-attachments/assets/b3b0b3b8-5d40-439f-b523-03cd7cc6c000",
             text: cleanText,
-            timestamp: data.timestamp ?? new Date().toISOString(),
+            timestamp: data.timestamp
+              ? new Date(new Date(data.timestamp).getTime() + 9 * 60 * 60 * 1000).toISOString()
+              : new Date().toISOString(),
             isTyping: false,
           }
 
