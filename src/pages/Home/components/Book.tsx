@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { api } from "@/api/instance"
+import { useNavigate } from "react-router-dom"
+import { createChatRoom } from "@/api/ChatRoom/useCreateChatRoom"
 
 type Story = {
   storyId: number
@@ -29,6 +31,7 @@ export default function BookSection() {
   const [westernBooks, setWesternBooks] = useState<Story[]>([])
   const [selectedBook, setSelectedBook] = useState<Story | null>(null)
   const [storyDetail, setStoryDetail] = useState<StoryDetail | null>(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchStories = async () => {
@@ -116,6 +119,19 @@ export default function BookSection() {
                       <div
                         key={char.characterId}
                         className="flex flex-col items-center rounded-lg bg-gray-50 p-6 text-center shadow-sm"
+                        onClick={async () => {
+                          try {
+                            const res = await createChatRoom({
+                              characterId: char.characterId,
+                              name: storyDetail.title,
+                              type: "SINGLE",
+                            })
+                            navigate(`/chat/${res.chatRoomId}`)
+                          } catch (error) {
+                            console.error("채팅방 생성 실패:", error)
+                            alert("채팅방 생성에 실패했습니다.")
+                          }
+                        }}
                       >
                         {char.imageUrl ? (
                           <img
