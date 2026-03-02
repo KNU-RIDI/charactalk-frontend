@@ -38,9 +38,9 @@
 
 ## 🛠 Tech Stack
 
-● 백엔드 기술 스택: Java, Spring Boot, Spring WebFlux, MySQL
-● 프론트엔드 기술 스택: TypeScript, React, tailwindCSS
-● 인공지능 기술 스택: Python3, LangChain, FastAPI
+- 백엔드 기술 스택: Java, Spring Boot, Spring WebFlux, MySQL
+- 프론트엔드 기술 스택: TypeScript, React, tailwindCSS
+- 인공지능 기술 스택: Python3, LangChain, FastAPI
 
 ---
 
